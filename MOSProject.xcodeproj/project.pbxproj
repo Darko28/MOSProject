@@ -8,13 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAA61F979ED4006B2EDD /* AppDelegate.swift */; };
-		A266DAA91F979ED4006B2EDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAA81F979ED4006B2EDD /* ViewController.swift */; };
 		A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A266DAAA1F979ED4006B2EDD /* Main.storyboard */; };
 		A266DAAF1F979ED4006B2EDD /* MOSProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */; };
 		A266DAB11F979ED4006B2EDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A266DAB01F979ED4006B2EDD /* Assets.xcassets */; };
 		A266DAB41F979ED4006B2EDD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A266DAB21F979ED4006B2EDD /* LaunchScreen.storyboard */; };
 		A266DABF1F979ED4006B2EDD /* MOSProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DABE1F979ED4006B2EDD /* MOSProjectTests.swift */; };
 		A266DACA1F979ED4006B2EDD /* MOSProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAC91F979ED4006B2EDD /* MOSProjectUITests.swift */; };
+		A266DAD91F97A0AC006B2EDD /* MOSAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAD81F97A0AC006B2EDD /* MOSAction.swift */; };
+		A266DADE1F97A56B006B2EDD /* MOSSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DADD1F97A56B006B2EDD /* MOSSection.swift */; };
+		A266DAE01F97AC71006B2EDD /* MOSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DADF1F97AC71006B2EDD /* MOSModel.swift */; };
+		A266DAE41F986ECD006B2EDD /* MOSProductCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAE31F986ECD006B2EDD /* MOSProductCommunicationManager.swift */; };
+		A266DAE81F987D2F006B2EDD /* MOSDynamicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAE61F987D2F006B2EDD /* MOSDynamicTableViewCell.swift */; };
+		A266DAE91F987D2F006B2EDD /* MOSDynamicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A266DAE71F987D2F006B2EDD /* MOSDynamicTableViewCell.xib */; };
+		A266DAEB1F988026006B2EDD /* MOSMainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAEA1F988026006B2EDD /* MOSMainTabViewController.swift */; };
+		A266DAED1F9881BC006B2EDD /* MOSJSONDynamicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAEC1F9881BC006B2EDD /* MOSJSONDynamicController.swift */; };
+		A266DAF01F9882C9006B2EDD /* MOSLogConsoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */; };
+		A266DAF11F9882C9006B2EDD /* MOSLogConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */; };
+		A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */; };
+		A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EC1F98AF0E00A6B0D8 /* config.json */; };
+		A36503BBE977568B104C35FE /* libPods-MOSProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,9 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.release.xcconfig"; sourceTree = "<group>"; };
 		A266DAA31F979ED4006B2EDD /* MOSProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOSProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A266DAA61F979ED4006B2EDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A266DAA81F979ED4006B2EDD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A266DAAB1F979ED4006B2EDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A266DAAE1F979ED4006B2EDD /* MOSProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MOSProject.xcdatamodel; sourceTree = "<group>"; };
 		A266DAB01F979ED4006B2EDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +61,20 @@
 		A266DAC51F979ED4006B2EDD /* MOSProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MOSProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A266DAC91F979ED4006B2EDD /* MOSProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSProjectUITests.swift; sourceTree = "<group>"; };
 		A266DACB1F979ED4006B2EDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A266DAD81F97A0AC006B2EDD /* MOSAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSAction.swift; sourceTree = "<group>"; };
+		A266DADD1F97A56B006B2EDD /* MOSSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSSection.swift; sourceTree = "<group>"; };
+		A266DADF1F97AC71006B2EDD /* MOSModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSModel.swift; sourceTree = "<group>"; };
+		A266DAE31F986ECD006B2EDD /* MOSProductCommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSProductCommunicationManager.swift; sourceTree = "<group>"; };
+		A266DAE61F987D2F006B2EDD /* MOSDynamicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSDynamicTableViewCell.swift; sourceTree = "<group>"; };
+		A266DAE71F987D2F006B2EDD /* MOSDynamicTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MOSDynamicTableViewCell.xib; sourceTree = "<group>"; };
+		A266DAEA1F988026006B2EDD /* MOSMainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSMainTabViewController.swift; sourceTree = "<group>"; };
+		A266DAEC1F9881BC006B2EDD /* MOSJSONDynamicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSJSONDynamicController.swift; sourceTree = "<group>"; };
+		A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSLogConsoleViewController.swift; sourceTree = "<group>"; };
+		A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MOSLogConsoleViewController.xib; sourceTree = "<group>"; };
+		A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewController.swift; sourceTree = "<group>"; };
+		A2A112EC1F98AF0E00A6B0D8 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MOSProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0504097D0329A50011ACB39 /* Pods-MOSProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A36503BBE977568B104C35FE /* libPods-MOSProject.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +103,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A460A77E4C51791C4202104 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9522DB3DABC0A12EA8AF5D92 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F0504097D0329A50011ACB39 /* Pods-MOSProject.debug.xcconfig */,
+				348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A266DA9A1F979ED4006B2EDD = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +127,8 @@
 				A266DABD1F979ED4006B2EDD /* MOSProjectTests */,
 				A266DAC81F979ED4006B2EDD /* MOSProjectUITests */,
 				A266DAA41F979ED4006B2EDD /* Products */,
+				9522DB3DABC0A12EA8AF5D92 /* Pods */,
+				5A460A77E4C51791C4202104 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,13 +145,13 @@
 		A266DAA51F979ED4006B2EDD /* MOSProject */ = {
 			isa = PBXGroup;
 			children = (
-				A266DAA61F979ED4006B2EDD /* AppDelegate.swift */,
-				A266DAA81F979ED4006B2EDD /* ViewController.swift */,
+				A2A112EC1F98AF0E00A6B0D8 /* config.json */,
 				A266DAAA1F979ED4006B2EDD /* Main.storyboard */,
-				A266DAB01F979ED4006B2EDD /* Assets.xcassets */,
-				A266DAB21F979ED4006B2EDD /* LaunchScreen.storyboard */,
+				A266DAD71F97A09D006B2EDD /* Model */,
+				A266DADC1F97A10D006B2EDD /* Controller */,
+				A266DADA1F97A0BC006B2EDD /* Presentation */,
+				A266DADB1F97A0DB006B2EDD /* Supporting Files */,
 				A266DAB51F979ED4006B2EDD /* Info.plist */,
-				A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */,
 			);
 			path = MOSProject;
 			sourceTree = "<group>";
@@ -128,6 +174,57 @@
 			path = MOSProjectUITests;
 			sourceTree = "<group>";
 		};
+		A266DAD71F97A09D006B2EDD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A266DAE21F986EB8006B2EDD /* Network */,
+				A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */,
+				A266DAD81F97A0AC006B2EDD /* MOSAction.swift */,
+				A266DADD1F97A56B006B2EDD /* MOSSection.swift */,
+				A266DADF1F97AC71006B2EDD /* MOSModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A266DADA1F97A0BC006B2EDD /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				A266DAE61F987D2F006B2EDD /* MOSDynamicTableViewCell.swift */,
+				A266DAE71F987D2F006B2EDD /* MOSDynamicTableViewCell.xib */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		A266DADB1F97A0DB006B2EDD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A266DAA61F979ED4006B2EDD /* AppDelegate.swift */,
+				A266DAB01F979ED4006B2EDD /* Assets.xcassets */,
+				A266DAB21F979ED4006B2EDD /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A266DADC1F97A10D006B2EDD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A266DAEA1F988026006B2EDD /* MOSMainTabViewController.swift */,
+				A266DAEC1F9881BC006B2EDD /* MOSJSONDynamicController.swift */,
+				A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */,
+				A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */,
+				A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A266DAE21F986EB8006B2EDD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A266DAE31F986ECD006B2EDD /* MOSProductCommunicationManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +232,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A266DACE1F979ED4006B2EDD /* Build configuration list for PBXNativeTarget "MOSProject" */;
 			buildPhases = (
+				3AABC4884D583CF6FB876D7F /* [CP] Check Pods Manifest.lock */,
 				A266DA9F1F979ED4006B2EDD /* Sources */,
 				A266DAA01F979ED4006B2EDD /* Frameworks */,
 				A266DAA11F979ED4006B2EDD /* Resources */,
+				2FC6B1FCA09E935CDE2F4B8C /* [CP] Embed Pods Frameworks */,
+				04C9959DD2D98DEFAE4170D4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -237,7 +337,10 @@
 			files = (
 				A266DAB41F979ED4006B2EDD /* LaunchScreen.storyboard in Resources */,
 				A266DAB11F979ED4006B2EDD /* Assets.xcassets in Resources */,
+				A266DAF11F9882C9006B2EDD /* MOSLogConsoleViewController.xib in Resources */,
 				A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */,
+				A266DAE91F987D2F006B2EDD /* MOSDynamicTableViewCell.xib in Resources */,
+				A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,14 +360,76 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		04C9959DD2D98DEFAE4170D4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2FC6B1FCA09E935CDE2F4B8C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject-frameworks.sh",
+				"${PODS_ROOT}/DJI-SDK-iOS/iOS_Mobile_SDK/DJISDK.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DJISDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3AABC4884D583CF6FB876D7F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MOSProject-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A266DA9F1F979ED4006B2EDD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A266DAA91F979ED4006B2EDD /* ViewController.swift in Sources */,
+				A266DAED1F9881BC006B2EDD /* MOSJSONDynamicController.swift in Sources */,
+				A266DAE41F986ECD006B2EDD /* MOSProductCommunicationManager.swift in Sources */,
 				A266DAAF1F979ED4006B2EDD /* MOSProject.xcdatamodeld in Sources */,
+				A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */,
 				A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */,
+				A266DAEB1F988026006B2EDD /* MOSMainTabViewController.swift in Sources */,
+				A266DAF01F9882C9006B2EDD /* MOSLogConsoleViewController.swift in Sources */,
+				A266DADE1F97A56B006B2EDD /* MOSSection.swift in Sources */,
+				A266DAD91F97A0AC006B2EDD /* MOSAction.swift in Sources */,
+				A266DAE01F97AC71006B2EDD /* MOSModel.swift in Sources */,
+				A266DAE81F987D2F006B2EDD /* MOSDynamicTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,10 +593,12 @@
 		};
 		A266DACF1F979ED4006B2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0504097D0329A50011ACB39 /* Pods-MOSProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HCYK33GWAM;
+				HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/Headers/Public\"";
 				INFOPLIST_FILE = MOSProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = darko.MOSProject;
@@ -443,10 +610,12 @@
 		};
 		A266DAD01F979ED4006B2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HCYK33GWAM;
+				HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/Headers/Public\"";
 				INFOPLIST_FILE = MOSProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = darko.MOSProject;
