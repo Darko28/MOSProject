@@ -10,8 +10,8 @@ import UIKit
 
 class MOSJSONDynamicController: UITableViewController {
     
-    var appDelegate: AppDelegate?
-    var section: MOSSection?
+    var appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    var section: MOSSection? = MOSSection()
 
     override func viewDidLoad() {
         super.viewDidLoad()

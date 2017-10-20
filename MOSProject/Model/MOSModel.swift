@@ -11,10 +11,10 @@ import Foundation
 public class MOSModel: NSObject {
 
     // MARK: -- JSON-Based UI
-    var jsonSections: Array<MOSSection>?
+    var jsonSections: Array<MOSSection>? = []
     
     // MARK: -- Logs
-    var logs: Array<NSDictionary>?
+    var logs: Array<NSDictionary>? = []
     
     
     // load the config.json file
@@ -23,16 +23,19 @@ public class MOSModel: NSObject {
         let configFileURL: URL = Bundle.main.url(forResource: "config", withExtension: "json")!
         let configFileContent: Data = try! Data(contentsOf: configFileURL)
         let error: Error? = nil
-//        do {
-        let jsonConfigFile: NSDictionary = try! (JSONSerialization.jsonObject(with: configFileContent, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary)
-//        } // catch {
-//            let error: Error
-//        }
+        var jsonConfigFile: NSDictionary = NSDictionary()
+        do {
+        let jsonConfigFileTemp: NSDictionary = try (JSONSerialization.jsonObject(with: configFileContent, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary)
+            jsonConfigFile = jsonConfigFileTemp
+        } catch {
+            //
+        }
+
         
         if error != nil {
             NSLog("Critical config.json parsing error:\n\(error!)\n")
         } else {
-            self.jsonSections?.removeAll()
+            self.jsonSections!.removeAll()
             
             let allKeys: NSArray = jsonConfigFile.allKeys as NSArray
             
@@ -41,7 +44,7 @@ public class MOSModel: NSObject {
                 let jsonContent = jsonConfigFile.object(forKey: sectionName)
                 let newSection: MOSSection = MOSSection(sectionName: sectionName, jsonContent: jsonContent as! Array<Any>)
                 
-                self.jsonSections?.append(newSection)
+                self.jsonSections!.append(newSection)
             }
         }
     }
@@ -54,6 +57,7 @@ public class MOSModel: NSObject {
         self.logs?.append(["log": newLogEntry])
         
         if self.logChangedBlock != nil  {
+            print("logChangedBlock is not equal to nil\n")
             self.logChangedBlock!()
         }
     }

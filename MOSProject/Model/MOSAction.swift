@@ -10,11 +10,11 @@ import Foundation
 
 public class MOSAction: NSObject {
     
-    var key: String?
-    var label: String?
-    var information: String?
-    var cmdID: NSNumber?
-    var acks: Bool?
+    var key: String? = "N/A"
+    var label: String? = "N/A"
+    var information: String? = ""
+    var cmdID: NSNumber? = -1
+    var acks: Bool? = false
     
     public override init() {
         super.init()
@@ -32,7 +32,9 @@ public class MOSAction: NSObject {
         }
         
         let jsonCommandLabel = jsonDictionary.object(forKey: "label") as? String
-        self.label = jsonCommandLabel
+        if jsonCommandLabel != nil {
+            self.label = jsonCommandLabel
+        }
         
         let jsonCommandInfo = jsonDictionary.object(forKey: "info") as? String
         self.information = jsonCommandInfo

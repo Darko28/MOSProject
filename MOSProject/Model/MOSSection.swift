@@ -11,16 +11,16 @@ import Foundation
 public class MOSSection: NSObject {
     
     var name: String?
-    var actions: Array<MOSAction>?
+    var actions: Array<MOSAction>? = []
     
     public override init() {
         super.init()
         self.name = "N/A"
-        self.actions = self.actionsInJSONArray(jsonArray: Array<MOSAction>())
+        self.actions = []
     }
     
-    public init(sectionName: String, jsonContent: Array<Any>) {
-        super.init()
+    public convenience init(sectionName: String, jsonContent: Array<Any>) {
+        self.init()
         self.name = sectionName
         self.actions = self.actionsInJSONArray(jsonArray: jsonContent)
     }
@@ -29,10 +29,10 @@ public class MOSSection: NSObject {
         var actions = Array<MOSAction>()
         for jsonObject in jsonArray {
             let jsonActions: NSDictionary = jsonObject as! NSDictionary
-            let action: MOSAction? = MOSAction(jsonDictionary: jsonActions)
-            if action != nil {
-                actions.append(action!)
-            }
+            let action: MOSAction = MOSAction(jsonDictionary: jsonActions)
+//            if action != nil {
+                actions.append(action)
+//            }
         }
         return actions
     }

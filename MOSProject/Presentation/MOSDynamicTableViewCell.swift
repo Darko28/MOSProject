@@ -18,11 +18,12 @@ class MOSDynamicTableViewCell: UITableViewCell {
     public typealias MOSGoActionBlock = (NSNumber, NSArray) -> Void
     var goAction: MOSGoActionBlock?
     
-    var actionModel: MOSAction?
+    var actionModel: MOSAction? = MOSAction()
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.populateWithActionModel(actionModel: actionModel!)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -42,7 +43,7 @@ class MOSDynamicTableViewCell: UITableViewCell {
     
     public func populateWithActionModel(actionModel: MOSAction) {
         self.actionModel = actionModel
-        self.cmdIdLabel.text = "\(actionModel.cmdID ?? 0)"
+        self.cmdIdLabel.text = actionModel.cmdID?.stringValue
         self.commandLabel.text = actionModel.label
         self.commandLabel.text = actionModel.information
         self.commandResultLabel.text = ""

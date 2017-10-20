@@ -35,8 +35,8 @@ class MOSLogConsoleViewController: UIViewController {
     
     func updateLogView() {
         var fullLog = ""
-        var logs: NSArray = self.appDelegate?.model?.logs as! NSArray
-        for index in logs.count...0 {
+        let logs: NSArray = self.appDelegate?.model?.logs as! NSArray
+        for index in logs.count..<0 {
             let logEntry = logs[index] as! NSDictionary
             let timeStamp: NSDate = logEntry["timeStamp"] as! NSDate
             let log: String = logEntry["log"] as! String
