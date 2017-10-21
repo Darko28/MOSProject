@@ -39,13 +39,14 @@ public class MOSAction: NSObject {
         let jsonCommandInfo = jsonDictionary.object(forKey: "info") as? String
         self.information = jsonCommandInfo
         
-        let jsonCmdID = jsonDictionary.object(forKey: "json_id") as? String
-        var result: UInt64 = 0
+        let jsonCmdID = jsonDictionary.object(forKey: "cmd_id") as? String
+//        self.cmdID = jsonCmdID as! NSNumber
         if jsonCmdID != nil {
-            let scanner: Scanner = Scanner.init(string: jsonCmdID!)
+            var result: UInt64 = 0
+            let scanner: Scanner = Scanner(string: jsonCmdID!)
             scanner.scanLocation = 2    // bypass '0x' character
             scanner.scanHexInt64(&result)
-            self.cmdID = NSNumber.init(value: result)
+            self.cmdID = NSNumber(value: result)
         }
         
         let jsonAck = jsonDictionary.object(forKey: "ack") as? Bool

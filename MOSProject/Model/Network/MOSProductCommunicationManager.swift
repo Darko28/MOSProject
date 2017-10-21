@@ -40,8 +40,8 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
     public typealias MOSAckBlock = (NSData, NSError?) -> Void
     
     public func sendData(data: NSData, with completion: () -> Void, and ackBlock: @escaping MOSAckBlock) {
-        let fc: DJIFlightController? = (self.connectedProduct! as! DJIAircraft).flightController
-        fc!.delegate = self
+        let fc: DJIFlightController? = (self.connectedProduct as? DJIAircraft)?.flightController
+        fc?.delegate = self
         fc?.sendData(toOnboardSDKDevice: data as Data, withCompletion: { (error) in
             if error != nil {
                 

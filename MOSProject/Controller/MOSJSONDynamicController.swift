@@ -51,7 +51,7 @@ class MOSJSONDynamicController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: MOSDynamicTableViewCell = tableView.dequeueReusableCell(withIdentifier: "action", for: indexPath) as! MOSDynamicTableViewCell
-        let action: MOSAction? = self.section?.actions![indexPath.row]
+        let action: MOSAction? = self.section!.actions![indexPath.row]
         
         cell.populateWithActionModel(actionModel: action!)
         
@@ -60,7 +60,8 @@ class MOSJSONDynamicController: UITableViewController {
             let data: NSData = NSData(bytes: &cmdIdUInt, length: cmdIdUInt.bitWidth)
             
             self.appDelegate?.model?.addLog(newLogEntry: "Sending CmdID \(cmdId) with \(arguments.count) Arguments")
-            cell?.commandResultLabel.text = "Sending ..."
+            cell!.commandResultLabel.text = "Sending ..."
+            print("\(cell!.commandResultLabel.text ?? "Send")")
             
             self.appDelegate?.productCommunicationManager?.sendData(data: data, with: {
                 self.appDelegate?.model?.addLog(newLogEntry: "Sent CmdID \(cmdId)")

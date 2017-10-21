@@ -33,19 +33,39 @@ class MOSLogConsoleViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+//    func updateLogView() {
+//        var fullLog = ""
+//        let logs: NSArray = (self.appDelegate!.model!.logs)! as NSArray
+//        for index in (0..<logs.count-1).reversed() {
+//            let logEntry = logs[index] as! NSDictionary
+//            let logEntry2 = logs[index+1] as! NSDictionary
+//            let timeStamp: Date = logEntry["timestamp"] as! Date
+//            let log: String = logEntry2["log"] as! String
+//
+//            fullLog = "\(fullLog) + \(timeStamp) + \(log)"
+//        }
+//        self.logView.text = fullLog
+//    }
+
     func updateLogView() {
         var fullLog = ""
-        let logs: NSArray = self.appDelegate?.model?.logs as! NSArray
-        for index in logs.count..<0 {
-            let logEntry = logs[index] as! NSDictionary
-            let timeStamp: NSDate = logEntry["timeStamp"] as! NSDate
-            let log: String = logEntry["log"] as! String
+        let logs: Array<Dictionary<String, Any>> = (self.appDelegate!.model!.logs)! as Array<Dictionary<String, Any>>
+        for logEntry in logs.enumerated() {
+            var timeStamp: Date = Date()
+            var log: String = ""
             
-            fullLog = "\(fullLog) + \(timeStamp) + \(log)"
+            if logEntry.offset % 2 == 0 {
+                timeStamp = logEntry.element["timestamp"] as! Date
+            } else {
+                log = logEntry.element["log"] as! String
+           }
+            if logEntry.offset % 2 == 1 {
+                fullLog = "\(fullLog) + \(timeStamp) +\(log)\n"
+            }
         }
         self.logView.text = fullLog
     }
-
+    
     /*
     // MARK: - Navigation
 

@@ -26,6 +26,7 @@
 		A266DAF11F9882C9006B2EDD /* MOSLogConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */; };
 		A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */; };
 		A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EC1F98AF0E00A6B0D8 /* config.json */; };
+		A2A112F01F9B3D3F00A6B0D8 /* AdvancedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */; };
 		A36503BBE977568B104C35FE /* libPods-MOSProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MOSLogConsoleViewController.xib; sourceTree = "<group>"; };
 		A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewController.swift; sourceTree = "<group>"; };
 		A2A112EC1F98AF0E00A6B0D8 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedViewController.xib; sourceTree = "<group>"; };
 		AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MOSProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0504097D0329A50011ACB39 /* Pods-MOSProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -213,6 +215,7 @@
 				A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */,
 				A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */,
 				A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */,
+				A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				A266DAB41F979ED4006B2EDD /* LaunchScreen.storyboard in Resources */,
 				A266DAB11F979ED4006B2EDD /* Assets.xcassets in Resources */,
 				A266DAF11F9882C9006B2EDD /* MOSLogConsoleViewController.xib in Resources */,
+				A2A112F01F9B3D3F00A6B0D8 /* AdvancedViewController.xib in Resources */,
 				A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */,
 				A266DAE91F987D2F006B2EDD /* MOSDynamicTableViewCell.xib in Resources */,
 				A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */,

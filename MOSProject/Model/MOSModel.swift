@@ -14,7 +14,7 @@ public class MOSModel: NSObject {
     var jsonSections: Array<MOSSection>? = []
     
     // MARK: -- Logs
-    var logs: Array<NSDictionary>? = []
+    var logs: Array<Dictionary<String, Any>>? = []
     
     
     // load the config.json file
@@ -53,8 +53,8 @@ public class MOSModel: NSObject {
     var logChangedBlock: MOSModelLogChangedBlock? = nil
     
     public func addLog(newLogEntry: String) {
-        self.logs?.append(["timestamp": Date()])
-        self.logs?.append(["log": newLogEntry])
+        self.logs!.append(["timestamp": Date()])
+        self.logs!.append(["log": newLogEntry])
         
         if self.logChangedBlock != nil  {
             print("logChangedBlock is not equal to nil\n")
