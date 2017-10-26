@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import DJISDK
 
 class MOSMainTabViewController: UITabBarController {
     
     var appDelegate: AppDelegate?
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         self.appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         let viewControllers = NSMutableArray()
@@ -51,11 +54,16 @@ class MOSMainTabViewController: UITabBarController {
         logVC.title = "Logs"
         viewControllers.add(logVC)
         
+        let waypointVC = DJIRootViewController(nibName: "DJIRootViewController", bundle: Bundle.main)
+        waypointVC.tabBarItem = UITabBarItem(title: "Waypoint", image: UIImage(named: "three"), tag: index + 1)
+        waypointVC.title = "Waypoint"
+        viewControllers.add(waypointVC)
+        
         self.appDelegate?.model?.addLog(newLogEntry: "Created UI")
         self.setViewControllers(viewControllers as? [UIViewController], animated: true)
         self.selectedViewController = selectedViewController
         
-    }
+    }    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

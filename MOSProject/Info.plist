@@ -41,5 +41,24 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UISupportedExternalAccessoryProtocols</key>
+	<array>
+		<string>com.dji.video</string>
+		<string>com.dji.common</string>
+		<string>com.dji.protocol</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>location always</string>
+	<key>NSLocationUsageDescription</key>
+	<string>location usage</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>location in use</string>
+	<key>DJISDKAppKey</key>
+	<string>4fbb7e69c745a7ac8635380c</string>
 </dict>
 </plist>

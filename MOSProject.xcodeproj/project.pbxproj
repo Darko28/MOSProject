@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */; };
 		A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAA61F979ED4006B2EDD /* AppDelegate.swift */; };
 		A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A266DAAA1F979ED4006B2EDD /* Main.storyboard */; };
 		A266DAAF1F979ED4006B2EDD /* MOSProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */; };
@@ -25,6 +26,15 @@
 		A266DAF01F9882C9006B2EDD /* MOSLogConsoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */; };
 		A266DAF11F9882C9006B2EDD /* MOSLogConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */; };
 		A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */; };
+		A290B8781F9DB66F0015D339 /* DJIAircraftAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A290B8771F9DB66F0015D339 /* DJIAircraftAnnotation.swift */; };
+		A290B87A1F9DB77F0015D339 /* DJIAircraftAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A290B8791F9DB77F0015D339 /* DJIAircraftAnnotationView.swift */; };
+		A290B87F1F9DBA0E0015D339 /* DJIMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A290B87E1F9DBA0E0015D339 /* DJIMapController.swift */; };
+		A290B8811F9DBBFD0015D339 /* DJIRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A290B8801F9DBBFD0015D339 /* DJIRootViewController.swift */; };
+		A290B8831F9DC2610015D339 /* DJIRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A290B8821F9DC2610015D339 /* DJIRootViewController.xib */; };
+		A290B8861F9DC5A50015D339 /* DJIGSButtonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A290B8841F9DC5A50015D339 /* DJIGSButtonController.swift */; };
+		A290B8871F9DC5A50015D339 /* DJIGSButtonController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A290B8851F9DC5A50015D339 /* DJIGSButtonController.xib */; };
+		A29CBBB51F9F2C390008D99B /* DJIWaypointConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29CBBB31F9F2C390008D99B /* DJIWaypointConfigViewController.swift */; };
+		A29CBBB61F9F2C390008D99B /* DJIWaypointConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A29CBBB41F9F2C390008D99B /* DJIWaypointConfigViewController.xib */; };
 		A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EC1F98AF0E00A6B0D8 /* config.json */; };
 		A2A112F01F9B3D3F00A6B0D8 /* AdvancedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */; };
 		A36503BBE977568B104C35FE /* libPods-MOSProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */; };
@@ -49,6 +59,7 @@
 
 /* Begin PBXFileReference section */
 		348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.release.xcconfig"; sourceTree = "<group>"; };
+		A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingAnnotationViewController.swift; sourceTree = "<group>"; };
 		A266DAA31F979ED4006B2EDD /* MOSProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOSProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A266DAA61F979ED4006B2EDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A266DAAB1F979ED4006B2EDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -73,6 +84,16 @@
 		A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSLogConsoleViewController.swift; sourceTree = "<group>"; };
 		A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MOSLogConsoleViewController.xib; sourceTree = "<group>"; };
 		A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewController.swift; sourceTree = "<group>"; };
+		A290B8771F9DB66F0015D339 /* DJIAircraftAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIAircraftAnnotation.swift; sourceTree = "<group>"; };
+		A290B8791F9DB77F0015D339 /* DJIAircraftAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIAircraftAnnotationView.swift; sourceTree = "<group>"; };
+		A290B87B1F9DB7940015D339 /* MOSProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOSProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		A290B87E1F9DBA0E0015D339 /* DJIMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIMapController.swift; sourceTree = "<group>"; };
+		A290B8801F9DBBFD0015D339 /* DJIRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIRootViewController.swift; sourceTree = "<group>"; };
+		A290B8821F9DC2610015D339 /* DJIRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DJIRootViewController.xib; sourceTree = "<group>"; };
+		A290B8841F9DC5A50015D339 /* DJIGSButtonController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIGSButtonController.swift; sourceTree = "<group>"; };
+		A290B8851F9DC5A50015D339 /* DJIGSButtonController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DJIGSButtonController.xib; sourceTree = "<group>"; };
+		A29CBBB31F9F2C390008D99B /* DJIWaypointConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIWaypointConfigViewController.swift; sourceTree = "<group>"; };
+		A29CBBB41F9F2C390008D99B /* DJIWaypointConfigViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DJIWaypointConfigViewController.xib; sourceTree = "<group>"; };
 		A2A112EC1F98AF0E00A6B0D8 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedViewController.xib; sourceTree = "<group>"; };
 		AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MOSProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +141,14 @@
 				348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A211083A1FA04FA800C21EFB /* Moving Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */,
+			);
+			path = "Moving Annotation";
 			sourceTree = "<group>";
 		};
 		A266DA9A1F979ED4006B2EDD = {
@@ -210,12 +239,8 @@
 		A266DADC1F97A10D006B2EDD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A266DAEA1F988026006B2EDD /* MOSMainTabViewController.swift */,
-				A266DAEC1F9881BC006B2EDD /* MOSJSONDynamicController.swift */,
-				A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */,
-				A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */,
-				A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */,
-				A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */,
+				A290B8751F9DB4E10015D339 /* MOS */,
+				A290B8761F9DB4F90015D339 /* Waypoint */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -226,6 +251,37 @@
 				A266DAE31F986ECD006B2EDD /* MOSProductCommunicationManager.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		A290B8751F9DB4E10015D339 /* MOS */ = {
+			isa = PBXGroup;
+			children = (
+				A266DAEA1F988026006B2EDD /* MOSMainTabViewController.swift */,
+				A266DAEC1F9881BC006B2EDD /* MOSJSONDynamicController.swift */,
+				A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */,
+				A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */,
+				A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */,
+				A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */,
+			);
+			path = MOS;
+			sourceTree = "<group>";
+		};
+		A290B8761F9DB4F90015D339 /* Waypoint */ = {
+			isa = PBXGroup;
+			children = (
+				A211083A1FA04FA800C21EFB /* Moving Annotation */,
+				A290B87B1F9DB7940015D339 /* MOSProject-Bridging-Header.h */,
+				A290B8771F9DB66F0015D339 /* DJIAircraftAnnotation.swift */,
+				A290B8791F9DB77F0015D339 /* DJIAircraftAnnotationView.swift */,
+				A290B87E1F9DBA0E0015D339 /* DJIMapController.swift */,
+				A290B8821F9DC2610015D339 /* DJIRootViewController.xib */,
+				A290B8801F9DBBFD0015D339 /* DJIRootViewController.swift */,
+				A290B8841F9DC5A50015D339 /* DJIGSButtonController.swift */,
+				A290B8851F9DC5A50015D339 /* DJIGSButtonController.xib */,
+				A29CBBB31F9F2C390008D99B /* DJIWaypointConfigViewController.swift */,
+				A29CBBB41F9F2C390008D99B /* DJIWaypointConfigViewController.xib */,
+			);
+			path = Waypoint;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +355,7 @@
 				TargetAttributes = {
 					A266DAA21F979ED4006B2EDD = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					A266DAB91F979ED4006B2EDD = {
@@ -339,11 +396,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A266DAB41F979ED4006B2EDD /* LaunchScreen.storyboard in Resources */,
+				A29CBBB61F9F2C390008D99B /* DJIWaypointConfigViewController.xib in Resources */,
 				A266DAB11F979ED4006B2EDD /* Assets.xcassets in Resources */,
 				A266DAF11F9882C9006B2EDD /* MOSLogConsoleViewController.xib in Resources */,
 				A2A112F01F9B3D3F00A6B0D8 /* AdvancedViewController.xib in Resources */,
+				A290B8831F9DC2610015D339 /* DJIRootViewController.xib in Resources */,
 				A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */,
 				A266DAE91F987D2F006B2EDD /* MOSDynamicTableViewCell.xib in Resources */,
+				A290B8871F9DC5A50015D339 /* DJIGSButtonController.xib in Resources */,
 				A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,9 +431,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject-resources.sh",
+				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
+				"${PODS_ROOT}/AMapNavi/AMapNaviKit.framework/AMapNavi.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -424,14 +488,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				A266DAED1F9881BC006B2EDD /* MOSJSONDynamicController.swift in Sources */,
+				A290B87A1F9DB77F0015D339 /* DJIAircraftAnnotationView.swift in Sources */,
 				A266DAE41F986ECD006B2EDD /* MOSProductCommunicationManager.swift in Sources */,
 				A266DAAF1F979ED4006B2EDD /* MOSProject.xcdatamodeld in Sources */,
+				A290B87F1F9DBA0E0015D339 /* DJIMapController.swift in Sources */,
 				A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */,
 				A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */,
+				A290B8861F9DC5A50015D339 /* DJIGSButtonController.swift in Sources */,
 				A266DAEB1F988026006B2EDD /* MOSMainTabViewController.swift in Sources */,
+				A29CBBB51F9F2C390008D99B /* DJIWaypointConfigViewController.swift in Sources */,
+				A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */,
 				A266DAF01F9882C9006B2EDD /* MOSLogConsoleViewController.swift in Sources */,
 				A266DADE1F97A56B006B2EDD /* MOSSection.swift in Sources */,
+				A290B8781F9DB66F0015D339 /* DJIAircraftAnnotation.swift in Sources */,
 				A266DAD91F97A0AC006B2EDD /* MOSAction.swift in Sources */,
+				A290B8811F9DBBFD0015D339 /* DJIRootViewController.swift in Sources */,
 				A266DAE01F97AC71006B2EDD /* MOSModel.swift in Sources */,
 				A266DAE81F987D2F006B2EDD /* MOSDynamicTableViewCell.swift in Sources */,
 			);
@@ -600,13 +671,17 @@
 			baseConfigurationReference = F0504097D0329A50011ACB39 /* Pods-MOSProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HCYK33GWAM;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/Headers/Public\"";
 				INFOPLIST_FILE = MOSProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = darko.MOSProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MOSProject/Controller/Waypoint/MOSProject-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -617,13 +692,16 @@
 			baseConfigurationReference = 348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HCYK33GWAM;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/Headers/Public\"";
 				INFOPLIST_FILE = MOSProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = darko.MOSProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MOSProject/Controller/Waypoint/MOSProject-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

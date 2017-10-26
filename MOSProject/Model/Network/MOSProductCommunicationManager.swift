@@ -24,7 +24,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
     }
     
     public func registerWithProduct() {
-        let registrationID = ""
+        let registrationID = "4fbb7e69c745a7ac8635380c"
         self.appDelegate?.model?.addLog(newLogEntry: "Registering Product with ID: \(registrationID)")
         DJISDKManager.registerApp(with: self)
     }
@@ -74,17 +74,31 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
         if error != nil {
             self.appDelegate?.model?.addLog(newLogEntry: "Error registering App: \(error!)")
         } else {
+//            DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.1.103")
+//            DJISDKManager.startConnectionToProduct()
+//            if DJISDKManager.startConnectionToProduct() == true {
+//                print("Product connected")
+//            } else {
+//                print("product not recognized")
+//            }
             self.appDelegate?.model?.addLog(newLogEntry: "Registration succeeded")
             self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product")
             
-            let startedResult: Bool = DJISDKManager.startConnectionToProduct()
-            
-            if startedResult {
-                self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product started successfully")
-            } else {
-                self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product failed to start")
-            }
+//            let startedResult: Bool = DJISDKManager.startConnectionToProduct()
+//            
+//            if startedResult {
+//                self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product started successfully")
+//            } else {
+//                self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product failed to start")
+//            }
         }
     }
-        
+    
+//    public func productConnected(_ product: DJIBaseProduct?) {
+//        if product != nil {
+//            let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
+//            flightController!.delegate = self
+//        }
+//    }
+    
 }
