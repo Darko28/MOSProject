@@ -10,16 +10,21 @@ import UIKit
 
 class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate {
     
+    var aircraftAnno: DJIAircraftAnnotation?
+    
     var aircraftImageView: UIImageView!
     
     var rotateDegree: CGFloat {
         set {
-            self.aircraftImageView.transform = CGAffineTransform(rotationAngle: newValue * CGFloat(Double.pi) / 180.0)
+            self.aircraftImageView.transform = CGAffineTransform(rotationAngle: newValue)
+            rotate1 = newValue
         }
         get {
             return self.rotateDegree
         }
     }
+    
+    var rotate1: CGFloat = 0.0
     
     override init!(annotation: MAAnnotation!, reuseIdentifier: String!) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -29,6 +34,10 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate {
         self.aircraftImageView = UIImageView()
         self.addSubview(aircraftImageView)
         self.rotateDegree = 0
+        
+//        if self.annotation != nil {
+//            print("\(rotate1)")
+//        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,10 +46,14 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate {
     
     func updateHeading(_ heading: CGFloat) {
 //        print("DJIAircraftAnnotationView update heading")
-        self.transform = CGAffineTransform.identity
-        self.transform = CGAffineTransform(rotationAngle: heading)
+//        self.transform = CGAffineTransform.identity
+//        self.transform = CGAffineTransform(rotationAngle: heading)
 //        (self.annotation as! DJIAircraftAnnotation).rotateDegree()
         self.rotateDegree = heading
+        if self.annotation != nil {
+            print("\(self.rotate1)")
+        }
+
     }
     
     func updateImage(image: UIImage!) {

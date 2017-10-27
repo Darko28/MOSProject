@@ -13,7 +13,7 @@ class DJIMapController: NSObject {
     public var editPoints: Array<CLLocation> = []
     var aircraftAnnotation: DJIAircraftAnnotation? = nil
     public var pointList: Array<CLLocationCoordinate2D> = []
-    
+        
     func wayPoints() -> [CLLocation] {
         return self.editPoints
     }
@@ -23,7 +23,7 @@ class DJIMapController: NSObject {
         let location: CLLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         editPoints.append(location)
         pointList.append(location.coordinate)
-        let annotation: MAAnimatedAnnotation = MAAnimatedAnnotation()
+        let annotation: MAPointAnnotation = MAPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
     }
@@ -42,21 +42,29 @@ class DJIMapController: NSObject {
     func updateAircraftLocation(_ location: CLLocationCoordinate2D, withMapView mapView: MAMapView) {
         if self.aircraftAnnotation == nil {
             print("aircraftAnnotation is nil, create an DJIAircraftAnnotation")
+            
             self.aircraftAnnotation = DJIAircraftAnnotation(coordinate: location)
             mapView.addAnnotation(self.aircraftAnnotation)
         }
         self.aircraftAnnotation!.setCoordinate(location)
     }
  
-    func updateHeading(_ heading: CGFloat) {
-        self.aircraftAnnotation?.movingDirection = CLLocationDirection(heading)
-    }
+//    func updateHeading(_ heading: CGFloat) {
+//        self.aircraftAnnotation?.movingDirection = CLLocationDirection(heading)
+//    }
+    
     
     func updateAircraftHeading(_ heading: CGFloat) {
 //        print("updateAircraftHeading")
+//        if self.aircraftAnnotation != nil {
+//            let aircraftAnnotationView: DJIAircraftAnnotationView = DJIAircraftAnnotationView(annotation: aircraftAnnotation, reuseIdentifier: "aircraftIdentifier")
+//            aircraftAnnotationView.updateHeading(heading)
+//        }
+        
         if self.aircraftAnnotation != nil {
-            let aircraftAnnotationView: DJIAircraftAnnotationView = DJIAircraftAnnotationView(annotation: aircraftAnnotation, reuseIdentifier: "aircraftIdentifier")
-            aircraftAnnotationView.updateHeading(heading)
+            self.aircraftAnnotation!.updateHeading(heading)
+        } else {
+            print("aircraft annotation nil")
         }
     }
     

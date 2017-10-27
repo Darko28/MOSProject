@@ -145,32 +145,6 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         }
     }
     
-    func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
-        if annotation.isKind(of: MAPointAnnotation.self) {
-            print("point annotation")
-            let pointReuseIdentifier = "Pin_Annotation"
-//            let pinView: MAPinAnnotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: "Pin_Annotation")
-            var annotationView: MAPinAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIdentifier) as! MAPinAnnotationView!
-            if annotationView == nil {
-                annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIdentifier)
-                let img = UIImage(named: "aircraft.png")
-                annotationView.image = img
-            }
-            
-            return annotationView
-//            pinView.tintColor = UIColor.purple
-//            pinView.pinColor = .purple
-//            pinView.image = UIImage(named: "aircraft.png")
-//            return pinView
-            
-        } else if annotation.isKind(of: DJIAircraftAnnotation.self) {
-            print("aircraft annotation")
-            let annoView: DJIAircraftAnnotationView = DJIAircraftAnnotationView(annotation: annotation, reuseIdentifier: "Aircraft_Annotation")
-            annoView.updateImage(image: UIImage(named: "aircraft.png"))
-            return annoView
-        }
-        return nil
-    }
     
     func focusMap() {
         if CLLocationCoordinate2DIsValid(self.droneLocation!) {
@@ -255,13 +229,13 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 self.appDelegate?.model?.addLog(newLogEntry: "start waypoint mission failed with error: \(error!.localizedDescription)")
                 print("start waypoint mission failed with error: \(error!.localizedDescription)")
                 
-                self.aircraftAnnotation.coordinate = (self.mapController?.pointList[0])!
-                let speed = sqrtf(self.aircraftState!.velocityX * self.aircraftState!.velocityX + self.aircraftState!.velocityY * self.aircraftState!.velocityY)
-                let durationTime = self.missionTotalDistance() / Double(speed)
-                print("\(speed)")
-                print("\(durationTime)")
-                self.appDelegate?.model?.addLog(newLogEntry: "\(durationTime)")
-                self.aircraftAnnotation.addMoveAnimation(withKeyCoordinates: &(self.mapController!.pointList), count: UInt(self.mapController!.editPoints.count), withDuration: CGFloat(durationTime), withName: nil, completeCallback: nil)
+//                self.aircraftAnnotation.coordinate = (self.mapController?.pointList[0])!
+//                let speed = sqrtf(self.aircraftState!.velocityX * self.aircraftState!.velocityX + self.aircraftState!.velocityY * self.aircraftState!.velocityY)
+//                let durationTime = self.missionTotalDistance() / Double(speed)
+//                print("\(speed)")
+//                print("\(durationTime)")
+//                self.appDelegate?.model?.addLog(newLogEntry: "\(durationTime)")
+//                self.aircraftAnnotation.addMoveAnimation(withKeyCoordinates: &(self.mapController!.pointList), count: UInt(self.mapController!.editPoints.count), withDuration: CGFloat(durationTime), withName: nil, completeCallback: nil)
                 
             } else {
                 self.appDelegate?.model?.addLog(newLogEntry: "start waypoint mission succeeded!")
@@ -377,14 +351,64 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     var aircraftAnnotation: MAAnimatedAnnotation! = MAAnimatedAnnotation()
     
     var aircraftState: DJIFlightControllerState?
+    var aircrafAnnotView: DJIAircraftAnnotationView!
     
+    func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
+        if annotation.isKind(of: DJIAircraftAnnotation.self) {
+            let aircraftReuseIdentifier = "Aircraft_Annotation"
+            print("aircraft annotation")
+            
+            var aircraftView: MAAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: aircraftReuseIdentifier)
+            if aircraftView == nil {
+                aircraftView = DJIAircraftAnnotationView(annotation: annotation, reuseIdentifier: aircraftReuseIdentifier)
+            }
+//            (aircraftView as! DJIAircraftAnnotationView).annotation = (annotation as! DJIAircraftAnnotation)
+//            (aircraftView as! DJIAircraftAnnotationView).updateImage(image: UIImage(named: "aircraft.png"))
+            aircrafAnnotView = aircraftView as! DJIAircraftAnnotationView
+            aircrafAnnotView.updateImage(image: UIImage(named: "aircraft.png"))
+            return aircraftView
+        } else if annotation.isKind(of: MAPointAnnotation.self) {
+            print("point annotation")
+            let pointReuseIdentifier = "Pin_Annotation"
+            //            let pinView: MAPinAnnotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: "Pin_Annotation")
+            var annotationView: MAPinAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIdentifier) as! MAPinAnnotationView!
+            if annotationView == nil {
+                annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIdentifier)
+                let img = UIImage(named: "anno.png")
+                annotationView.image = img
+            }
+            
+            return annotationView
+            //            pinView.tintColor = UIColor.purple
+            //            pinView.pinColor = .purple
+            //            pinView.image = UIImage(named: "aircraft.png")
+            //            return pinView
+            
+        }
+        return nil
+    }
+
     func flightController(_ fc: DJIFlightController, didUpdate state: DJIFlightControllerState) {
         
-        self.aircraftState = state
+//        self.aircraftState = state
         self.droneLocation = state.aircraftLocation!.coordinate
 //        print("\(droneLocation!.latitude) \(droneLocation!.longitude)")
         
 //        aircraftCoords.append(state.aircraftLocation!.coordinate)
+        
+        
+        if self.droneLocation != nil {
+//            self.mapController!.aircraftAnnotation = DJIAircraftAnnotation(coordinate: droneLocation!)
+            self.mapController!.updateAircraftLocation(self.droneLocation!, withMapView: self.mapView)
+            let radianYaw = ((state.attitude.yaw) * .pi / 180.0)
+            //        print("\(radianYaw)")
+            //        self.mapController!.updateHeading(CGFloat(radianYaw))
+            
+//            self.mapController!.updateAircraftHeading(CGFloat(radianYaw))
+            self.aircrafAnnotView?.rotateDegree = CGFloat(radianYaw)
+        }
+        
+
         
         self.modeLabel.text = state.flightModeString
         self.gpsLabel.text = String(format: "%d", state.satelliteCount)
@@ -415,20 +439,6 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         
 //        print("\(self.mapController!.pointList.count)")
 //        print("\(String(describing: self.mapController?.editPoints.count))")
-        
-        if self.droneLocation != nil {
-            self.mapController!.updateAircraftLocation(self.droneLocation!, withMapView: self.mapView)
-            if self.mapController!.aircraftAnnotation == nil {
-                print("aircraftAnnotation is nil, create an DJIAircraftAnnotation")
-                self.mapController!.aircraftAnnotation = DJIAircraftAnnotation(coordinate: self.droneLocation!)
-                mapView.addAnnotation(self.mapController!.aircraftAnnotation)
-            }
-     }
-
-        let radianYaw = ((state.attitude.yaw) * .pi / 180.0)
-//        print("\(radianYaw)")
-        self.mapController!.updateHeading(CGFloat(radianYaw))
-        self.mapController!.updateAircraftHeading(CGFloat(radianYaw))
         
     }
     
