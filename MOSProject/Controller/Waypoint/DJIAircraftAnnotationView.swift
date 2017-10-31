@@ -8,52 +8,37 @@
 
 import UIKit
 
+
+//let kCalloutWidth: CGFloat = 200.0
+//let kCalloutHeight: CGFloat = 70.0
+
+
 class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate {
     
-    var aircraftAnno: DJIAircraftAnnotation?
-    
     var aircraftImageView: UIImageView!
-    
+    var calloutView: CustomWaypointCalloutView?
+
     var rotateDegree: CGFloat {
         set {
             self.aircraftImageView.transform = CGAffineTransform(rotationAngle: newValue)
-            rotate1 = newValue
         }
         get {
             return self.rotateDegree
         }
     }
     
-    var rotate1: CGFloat = 0.0
-    
     override init!(annotation: MAAnnotation!, reuseIdentifier: String!) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.isEnabled = false
         self.isDraggable = false
-//        self.image = UIImage(named: "aircraft.png")
         self.aircraftImageView = UIImageView()
         self.addSubview(aircraftImageView)
         self.rotateDegree = 0
         
-//        if self.annotation != nil {
-//            print("\(rotate1)")
-//        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func updateHeading(_ heading: CGFloat) {
-//        print("DJIAircraftAnnotationView update heading")
-//        self.transform = CGAffineTransform.identity
-//        self.transform = CGAffineTransform(rotationAngle: heading)
-//        (self.annotation as! DJIAircraftAnnotation).rotateDegree()
-        self.rotateDegree = heading
-        if self.annotation != nil {
-            print("\(self.rotate1)")
-        }
-
     }
     
     func updateImage(image: UIImage!) {
@@ -62,9 +47,28 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate {
         self.aircraftImageView.sizeToFit()
     }
     
-//    func updateHeading(_ heading: CGFloat, withAnnotations annotations: MAAnimatedAnnotation, count: UInt) {
-//        self.annotation = annotation
-//        annotation.addMoveAnimation(withKeyCoordinates: &(annotation.coordinate), count: count, withDuration: 5, withName: nil, completeCallback: nil)
-//    }
-    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        if self.isSelected == selected {
+            return
+        }
+        if selected {
+            if self.calloutView == nil {
+                self.calloutView = CustomWaypointCalloutView.init(frame: CGRect(x: 0, y: 0, width: kCalloutWidth, height: kCalloutHeight))
+                self.calloutView?.center = CGPoint(x: self.bounds.width / 2 + self.calloutOffset.x, y: -((self.calloutView?.bounds.height)! / 2 + self.calloutOffset.y))
+            }
+//            self.calloutView?.image = UIImage(named: "calloutIcon")
+//            self.calloutView?.title = self.annotation.title
+//            self.calloutView?.subTitle = self.annotation.subtitle
+            self.calloutView?.setImage(image: UIImage(named: "calloutIcon")!)
+            self.calloutView?.setTitle(title: self.annotation.title!)
+            self.calloutView?.setSubTitle(subTitle: self.annotation.subtitle!)
+            
+            self.addSubview(self.calloutView!)
+        } else {
+            self.calloutView?.removeFromSuperview()
+        }
+        
+        super.setSelected(selected, animated: animated)
+    }
+
 }

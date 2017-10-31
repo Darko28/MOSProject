@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */; };
+		A22A2DF31FA6C15900007A9F /* CustomWaypointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */; };
+		A22DC4091FA6B742001B6CC7 /* CustomWaypointCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */; };
 		A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAA61F979ED4006B2EDD /* AppDelegate.swift */; };
 		A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A266DAAA1F979ED4006B2EDD /* Main.storyboard */; };
 		A266DAAF1F979ED4006B2EDD /* MOSProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */; };
@@ -60,6 +62,8 @@
 /* Begin PBXFileReference section */
 		348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.release.xcconfig"; sourceTree = "<group>"; };
 		A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingAnnotationViewController.swift; sourceTree = "<group>"; };
+		A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaypointAnnotationView.swift; sourceTree = "<group>"; };
+		A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaypointCalloutView.swift; sourceTree = "<group>"; };
 		A266DAA31F979ED4006B2EDD /* MOSProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOSProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A266DAA61F979ED4006B2EDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A266DAAB1F979ED4006B2EDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 				A290B8851F9DC5A50015D339 /* DJIGSButtonController.xib */,
 				A29CBBB31F9F2C390008D99B /* DJIWaypointConfigViewController.swift */,
 				A29CBBB41F9F2C390008D99B /* DJIWaypointConfigViewController.xib */,
+				A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */,
+				A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */,
 			);
 			path = Waypoint;
 			sourceTree = "<group>";
@@ -497,8 +503,10 @@
 				A290B8861F9DC5A50015D339 /* DJIGSButtonController.swift in Sources */,
 				A266DAEB1F988026006B2EDD /* MOSMainTabViewController.swift in Sources */,
 				A29CBBB51F9F2C390008D99B /* DJIWaypointConfigViewController.swift in Sources */,
+				A22DC4091FA6B742001B6CC7 /* CustomWaypointCalloutView.swift in Sources */,
 				A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */,
 				A266DAF01F9882C9006B2EDD /* MOSLogConsoleViewController.swift in Sources */,
+				A22A2DF31FA6C15900007A9F /* CustomWaypointAnnotationView.swift in Sources */,
 				A266DADE1F97A56B006B2EDD /* MOSSection.swift in Sources */,
 				A290B8781F9DB66F0015D339 /* DJIAircraftAnnotation.swift in Sources */,
 				A266DAD91F97A0AC006B2EDD /* MOSAction.swift in Sources */,

@@ -24,6 +24,8 @@ class DJIMapController: NSObject {
         editPoints.append(location)
         pointList.append(location.coordinate)
         let annotation: MAPointAnnotation = MAPointAnnotation()
+        annotation.title = "waypoint pm2.5"
+        annotation.subtitle = "waypoint pm10"
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
     }
@@ -44,28 +46,11 @@ class DJIMapController: NSObject {
             print("aircraftAnnotation is nil, create an DJIAircraftAnnotation")
             
             self.aircraftAnnotation = DJIAircraftAnnotation(coordinate: location)
+            self.aircraftAnnotation?.title = "aircraft pm2.5"
+            self.aircraftAnnotation?.subtitle = "aircraft pm10"
             mapView.addAnnotation(self.aircraftAnnotation)
         }
         self.aircraftAnnotation!.setCoordinate(location)
-    }
- 
-//    func updateHeading(_ heading: CGFloat) {
-//        self.aircraftAnnotation?.movingDirection = CLLocationDirection(heading)
-//    }
-    
-    
-    func updateAircraftHeading(_ heading: CGFloat) {
-//        print("updateAircraftHeading")
-//        if self.aircraftAnnotation != nil {
-//            let aircraftAnnotationView: DJIAircraftAnnotationView = DJIAircraftAnnotationView(annotation: aircraftAnnotation, reuseIdentifier: "aircraftIdentifier")
-//            aircraftAnnotationView.updateHeading(heading)
-//        }
-        
-        if self.aircraftAnnotation != nil {
-            self.aircraftAnnotation!.updateHeading(heading)
-        } else {
-            print("aircraft annotation nil")
-        }
     }
     
 }

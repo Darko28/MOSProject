@@ -82,10 +82,10 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
 //                print("product not recognized")
 //            }
             self.appDelegate?.model?.addLog(newLogEntry: "Registration succeeded")
-            self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product")
-            
+//            self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product")
+
 //            let startedResult: Bool = DJISDKManager.startConnectionToProduct()
-//            
+//
 //            if startedResult {
 //                self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product started successfully")
 //            } else {
@@ -93,12 +93,12 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
 //            }
         }
     }
-    
-//    public func productConnected(_ product: DJIBaseProduct?) {
-//        if product != nil {
-//            let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
-//            flightController!.delegate = self
-//        }
-//    }
-    
+//
+////    public func productConnected(_ product: DJIBaseProduct?) {
+////        if product != nil {
+////            let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
+////            flightController!.delegate = self
+////        }
+////    }
+//
 }
