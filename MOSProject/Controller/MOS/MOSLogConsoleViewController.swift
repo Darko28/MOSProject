@@ -18,9 +18,10 @@ class MOSLogConsoleViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.appDelegate = UIApplication.shared.delegate as? AppDelegate
-        self.appDelegate?.model?.logChangedBlock = {
-            self.updateLogView()
-        }
+//        self.appDelegate?.model?.logChangedBlock = {
+//            self.updateLogView()
+//        }
+        self.appDelegate?.model?.logChangedBlock = self.updateLogView
     }
 
     override func viewDidAppear(_ animated: Bool) {

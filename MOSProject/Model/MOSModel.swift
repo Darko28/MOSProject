@@ -21,31 +21,32 @@ public class MOSModel: NSObject {
     public func loadConfiguration() {
         
         let configFileURL: URL = Bundle.main.url(forResource: "config", withExtension: "json")!
-        let configFileContent: Data = try! Data(contentsOf: configFileURL)
-        let error: Error? = nil
+        var configFileContent: Data = Data()
+        do {
+            let configFileContentTmp: Data = try Data(contentsOf: configFileURL)
+            configFileContent = configFileContentTmp
+        } catch {
+            print("URL file not exists.")
+        }
+        //        let error: Error? = nil
         var jsonConfigFile: NSDictionary = NSDictionary()
         do {
-        let jsonConfigFileTemp: NSDictionary = try (JSONSerialization.jsonObject(with: configFileContent, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary)
+            let jsonConfigFileTemp: NSDictionary = try (JSONSerialization.jsonObject(with: configFileContent, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary)
             jsonConfigFile = jsonConfigFileTemp
         } catch {
-            //
+            NSLog("Critical config.json parsing error.\n")
         }
-
         
-        if error != nil {
-            NSLog("Critical config.json parsing error:\n\(error!)\n")
-        } else {
-            self.jsonSections!.removeAll()
+        self.jsonSections!.removeAll()
+        
+        let allKeys: NSArray = jsonConfigFile.allKeys as NSArray
+        
+        for index in 0..<allKeys.count {
+            let sectionName: String = allKeys.object(at: index) as! String
+            let jsonContent = jsonConfigFile.object(forKey: sectionName)
+            let newSection: MOSSection = MOSSection(sectionName: sectionName, jsonContent: jsonContent as! Array<Any>)
             
-            let allKeys: NSArray = jsonConfigFile.allKeys as NSArray
-            
-            for index in 0..<allKeys.count {
-                let sectionName: String = allKeys.object(at: index) as! String
-                let jsonContent = jsonConfigFile.object(forKey: sectionName)
-                let newSection: MOSSection = MOSSection(sectionName: sectionName, jsonContent: jsonContent as! Array<Any>)
-                
-                self.jsonSections!.append(newSection)
-            }
+            self.jsonSections!.append(newSection)
         }
     }
     
@@ -59,6 +60,8 @@ public class MOSModel: NSObject {
         if self.logChangedBlock != nil  {
             print("logChangedBlock is not equal to nil\n")
             self.logChangedBlock!()
+        } else {
+            print("logChangedBlock is nil")
         }
     }
     

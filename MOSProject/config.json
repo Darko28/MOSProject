@@ -161,6 +161,14 @@
                          "ack" : true,
                          "ack_size" : 1,
                          "info" : "Supported on ROS",
+                         },
+                         {
+                         "key" : "sensorData",
+                         "cmd_id" : "0x2c",
+                         "label" : "Sensor Data",
+                         "ack" : true,
+                         "ack_size" : 1,
+                         "info" : "Linux",
                          }
     ]
 }

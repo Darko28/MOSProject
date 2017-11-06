@@ -9,7 +9,7 @@
 import UIKit
 import DJISDK
 
-class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationManagerDelegate, DJISDKManagerDelegate, DJIGSButtonControllerDelegate, DJIFlightControllerDelegate, DJIWaypointConfigViewControllerDelegate {
+class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationManagerDelegate, DJIGSButtonControllerDelegate, DJIFlightControllerDelegate, DJIWaypointConfigViewControllerDelegate, DJISDKManagerDelegate {
     
     var appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     
@@ -19,6 +19,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     @IBOutlet weak var vsLabel: UILabel!
     @IBOutlet weak var altitudeLabel: UILabel!
     @IBOutlet weak var topView: UIView!
+    
+    
+    var createWaypointButton: UIButton!
     
     
     var mapView: MAMapView!
@@ -52,7 +55,12 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     var coordinatesBuffer: Array<CLLocationCoordinate2D> = []
     
     var cancelTapGesture: UITapGestureRecognizer? = UITapGestureRecognizer(target: self, action: #selector(singleTap(_:)))
+    
+    var aircraftStatus: DJIFlightControllerState?
 
+    var homeLocation: CLLocationCoordinate2D?
+    
+    var fc: DJIFlightController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +106,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     }
     
     func initUI() {
+        
         self.modeLabel?.text = "N/A"
         self.gpsLabel?.text = "0"
         self.hsLabel?.text = "0.0 M/S"
@@ -106,7 +115,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         
         self.mapView = MAMapView(frame: self.view.bounds)
         self.mapView.delegate = self
-
+        self.mapView.showsUserLocation = true
+        self.mapView.userTrackingMode = .none
+        
         self.gsButtonVC = DJIGSButtonController(nibName: "DJIGSButtonController", bundle: Bundle.main)
         if self.gsButtonVC != nil {
             self.gsButtonVC?.view.frame = CGRect(x: 10, y: (self.topView.frame.origin.y + self.topView.frame.size.height + 72), width: self.gsButtonVC!.view.frame.size.width, height: self.gsButtonVC!.view.frame.size.height)
@@ -132,9 +143,17 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.waypointConfigVC?.delegate = self
         self.view.addSubview((self.waypointConfigVC?.view)!)
         
-        self.mapView.addAnnotation(self.aircraftAnnotation)
+//        self.mapView.addAnnotation(self.aircraftAnnotation)
         
         self.mapView.isUserInteractionEnabled = true
+        
+        self.createWaypointButton = UIButton(frame: CGRect(x: 20, y: (self.topView.frame.origin.y + self.topView.frame.size.height + 300), width: 100, height: 48))
+        self.createWaypointButton.backgroundColor = UIColor.lightGray
+        self.createWaypointButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        self.createWaypointButton.titleLabel?.textColor = UIColor.white
+        self.createWaypointButton.setTitle("create waypoint", for: .normal)
+        self.createWaypointButton.addTarget(self, action: #selector(createWaypoints(_:)), for: .touchUpInside)
+        self.mapView.addSubview(self.createWaypointButton)
     }
     
     func initData() {
@@ -153,16 +172,17 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             self.present(alertController, animated: true, completion: nil)
         } else {
             print("DJI SDK register succeed!")
-//            DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.1.103")
+            DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.1.101")
+            self.appDelegate?.model?.addLog(newLogEntry: "waypoint registration succeed")
             DJISDKManager.startConnectionToProduct()
         }
     }
-    
+//
     func productConnected(_ product: DJIBaseProduct?) {
         if product != nil {
             let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
             flightController?.delegate = self
-            self.appDelegate?.model?.addLog(newLogEntry: "product is connected")
+            self.appDelegate?.model?.addLog(newLogEntry: "waypoint product is connected")
             DJISDKManager.userAccountManager().logIntoDJIUserAccount(withAuthorizationRequired: false) { (state, error) in
                 if error != nil {
                     self.appDelegate?.model?.addLog(newLogEntry: "Login failed")
@@ -174,15 +194,29 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         }
     }
     
+    var homeAnnotation: MAPointAnnotation?
+    
     func focusMap() {
         self.appDelegate?.model?.addLog(newLogEntry: "\(String(describing: self.droneLocation))")
 //        if CLLocationCoordinate2DIsValid(self.droneLocation!) {
             var region: MACoordinateRegion = MACoordinateRegion()
-            if self.droneLocation != nil {
-                region.center = self.droneLocation!
+            if self.homeLocation != nil {
+                self.homeAnnotation = MAPointAnnotation()
+                homeAnnotation?.coordinate = self.homeLocation!
+                mapView.addAnnotation(self.homeAnnotation)
+//                region.center = AMapCoordinateConvert(self.droneLocation!, .GPS)
+                region.center = self.homeLocation!
                 region.span.latitudeDelta = 0.001
                 region.span.longitudeDelta = 0.001
                 mapView.setRegion(region, animated: true)
+                
+                if self.homeLocale != nil {
+                    fc?.setHomeLocation(self.homeLocale!, withCompletion: nil)
+                } else {
+                    self.appDelegate?.model?.addLog(newLogEntry: "homeLocation using aircraft current location")
+                    fc?.setHomeLocationUsingAircraftCurrentLocationWithCompletion(nil)
+                }
+
             } else {
                 self.appDelegate?.model?.addLog(newLogEntry: "drone location nil")
                 print("location nil")
@@ -229,6 +263,17 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         }
     }
     
+    @objc func createWaypoints(_ sender: UIButton) {
+        print("create waypoint")
+        self.appDelegate?.model?.addLog(newLogEntry: "create waypoint")
+        if self.aircraftStatus?.aircraftLocation?.coordinate != nil {
+            let aircraftCoordinate: CLLocationCoordinate2D = (self.aircraftStatus?.aircraftLocation?.coordinate)!
+            let horizontalVelocity = (self.aircraftStatus?.velocityX == 0 && self.aircraftStatus?.velocityY == 0) ? 0.0 : 1.0
+            
+            self.mapController?.createWaypoint(waypointCoordinate: aircraftCoordinate, with: horizontalVelocity, with: self.mapView)
+        }
+    }
+    
     func addBtn(button: UIButton, withActionInGSButtonVC GSBtnVC: DJIGSButtonController) {
         if self.isEditingPoints {
             self.mapView.removeGestureRecognizer(tapGesture!)
@@ -261,15 +306,47 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     }
     
     func clearBtnActionInGSButtonVC(GSBtnVC: DJIGSButtonController) {
-        self.mapController?.clearAllPointsInMapView(self.mapView)
+//        self.mapController?.clearAllPointsInMapView(self.mapView)
         if self.passedTrajectory != nil {
             self.appDelegate?.model?.addLog(newLogEntry: "remove passed trajectory")
-            let trajectoryCount = self.coordinatesBuffer.count
-            for _ in 0..<trajectoryCount {
-                self.mapView.remove(self.passedTrajectory)
-            }
+            //            let trajectoryCount = self.coordinatesBuffer.count
+            //            for _ in 0..<trajectoryCount {
+            //                self.mapView.remove(self.passedTrajectory)
+            self.clearAllTrajectoryInMapView(mapView: self.mapView)
+            self.mapView.remove(self.passedTrajectory)
+            self.coordinatesBuffer.removeAll()
+            //            }
         } else {
             self.appDelegate?.model?.addLog(newLogEntry: "passedTrajectory is nil")
+        }
+    }
+    
+    func clearRoutesBtnActionInGSButtonVC(GSBtnVC: DJIGSButtonController) {
+        if self.passedTrajectory != nil {
+            self.appDelegate?.model?.addLog(newLogEntry: "remove passed trajectory")
+            //            let trajectoryCount = self.coordinatesBuffer.count
+            //            for _ in 0..<trajectoryCount {
+            //                self.mapView.remove(self.passedTrajectory)
+            self.clearAllTrajectoryInMapView(mapView: self.mapView)
+            self.mapView.remove(self.passedTrajectory)
+            self.coordinatesBuffer.removeAll()
+            //            }
+        } else {
+            self.appDelegate?.model?.addLog(newLogEntry: "passedTrajectory is nil")
+        }
+    }
+    
+    func clearAllTrajectoryInMapView(mapView: MAMapView) {
+        if self.passedTrajectory != nil {
+            coordinatesBuffer.removeAll()
+            var overlays = mapView.overlays
+            for i in 0 ..< overlays!.count {
+                let overlay = overlays![i]
+                mapView.remove(overlay as! MAPolyline)
+//                if !((overlay as AnyObject).isEqual(self.aircraftAnnotation)) {
+//                    mapView.removeAnnotation(anno as! MAAnnotation)
+//                }
+            }
         }
     }
     
@@ -298,19 +375,6 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     }
     
     func configBtnActionInGSButtonVC(GSBtnVC: DJIGSButtonController) {
-        
-//        if !(self.tapGesture!.isEnabled) && !(self.isEditingPoints) {
-//            //        self.mapView.addGestureRecognizer(cancelTapGesture)
-//            print("add cancelTapGesture")
-//            self.mapView.subviews[1].addGestureRecognizer(cancelTapGesture)
-//        } else if self.mapView.gestureRecognizers!.contains(cancelTapGesture) {
-//            print("remove cancelTapGesture")
-//            self.mapView.removeGestureRecognizer(cancelTapGesture)
-//            self.waypointConfigVC?.singleTap.isEnabled = false
-//       }
-        
-//        self.updateGestureRecognizer()
-
         self.mapView.addGestureRecognizer(cancelTapGesture!)
         self.waypointConfigVC?.singleTap.isEnabled = false
         
@@ -333,7 +397,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         for i in 0 ..< (waypoints?.count)! {
             let location: CLLocation? = waypoints?[i]
             if CLLocationCoordinate2DIsValid((location?.coordinate)!) {
-                let waypoint: DJIWaypoint = DJIWaypoint(coordinate: location!.coordinate)
+//                let amapCoordinate: CLLocationCoordinate2D = AMapCoordinateConvert((location?.coordinate)!, .GPS)
+                let waypoint: DJIWaypoint = DJIWaypoint(coordinate: (location?.coordinate)!)
+                waypoint.cornerRadiusInMeters = 3.0
                 self.waypointMission?.add(waypoint)
             }
         }
@@ -359,6 +425,16 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             self.appDelegate?.model?.addLog(newLogEntry: "missionOperator is nil")
         }
         
+        self.waypointMission?.flightPathMode = .curved
+//        self.missionOperator?.addListener(toFinished: self, with: DispatchQueue.main, andBlock: { (error) in
+//            if error != nil {
+//                self.appDelegate?.model?.addLog(newLogEntry: "mission finished error: \(error!.localizedDescription)")
+//            } else {
+//                self.mapController?.editPoints.removeAll()
+//                self.appDelegate?.model?.addLog(newLogEntry: "mission finished!")
+//            }
+//        })
+        
         self.missionOperator?.load(self.waypointMission!)
         
         self.missionOperator?.uploadMission(completion: { (error) in
@@ -377,6 +453,8 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 self.appDelegate?.model?.addLog(newLogEntry: "mission execution failed")
             } else {
                 self.appDelegate?.model?.addLog(newLogEntry: "mission execution succeed")
+//                self.appDelegate?.model?.addLog(newLogEntry: "\(self.missionTotalDistance())")
+//                self.mapController?.editPoints.removeAll()
                 print("Mission execution finished")
             }
         })
@@ -469,19 +547,37 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last!
         self.userLocation = location.coordinate
+        self.homeLocale = location
     }
 
+    var homeLocale: CLLocation?
     func flightController(_ fc: DJIFlightController, didUpdate state: DJIFlightControllerState) {
         
+        self.fc = fc
+        
+        self.aircraftStatus = state
+        
         self.droneLocation = state.aircraftLocation?.coordinate
+//        self.homeLocation = state.aircraftLocation?.coordinate
+        self.homeLocation = AMapCoordinateConvert((state.aircraftLocation?.coordinate)!, .GPS)
+        
+//        if state.aircraftLocation?.coordinate != nil {
+////            self.droneLocation = AMapCoordinateConvert((state.aircraftLocation?.coordinate)!, .GPS)
+//
+////            MATraceManager.sharedInstance().queryProcessedTrace(with: [MATraceLocation], type: , processingCallback: , finishCallback: , failedCallback: )
+//
+//        }
         
         if self.droneLocation != nil {
+            self.droneLocation = AMapCoordinateConvert((state.aircraftLocation?.coordinate)!, .GPS)
             self.mapController!.updateAircraftLocation(self.droneLocation!, withMapView: self.mapView)
             let radianYaw = ((state.attitude.yaw) * .pi / 180.0)
             self.aircrafAnnoView?.rotateDegree = CGFloat(radianYaw)
-            if mapController?.editPoints.count == 0 {
-                self.aircraftAnnotation.coordinate = droneLocation!
-            }
+//            if mapController?.editPoints.count == 0 {
+//                self.aircraftAnnotation.coordinate = droneLocation!
+//            }
+        } else {
+            self.appDelegate?.model?.addLog(newLogEntry: "aircraftLocation is nil")
         }
         
         self.modeLabel.text = state.flightModeString
@@ -490,13 +586,15 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.hsLabel.text = NSString.localizedStringWithFormat("%0.1f M/S", sqrtf(state.velocityX * state.velocityX + state.velocityY * state.velocityY)) as String
         self.altitudeLabel.text = String(format: "%.1f M", state.altitude)
         
-        if state.aircraftLocation != nil {
-//            buffer[passedCoordinatesCount] = state.aircraftLocation!.coordinate
-            coordinatesBuffer.append(state.aircraftLocation!.coordinate)
-            self.passedCoordinatesCount = coordinatesBuffer.count
+        if self.missionOperator?.currentState == DJIWaypointMissionState.executing {
+            if state.aircraftLocation != nil {
+                //            buffer[passedCoordinatesCount] = state.aircraftLocation!.coordinate
+                coordinatesBuffer.append(self.droneLocation!)
+                self.passedCoordinatesCount = coordinatesBuffer.count
+            }
+            
+            self.drawPassedTrace()
         }
-        
-        self.drawPassedTrace()
     }
     
     func drawTrace() {
@@ -516,6 +614,8 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             
             self.passedTrajectory = MAPolyline.init(coordinates: &(self.coordinatesBuffer), count: UInt(bufferCount))
             self.mapView.add(self.passedTrajectory)
+//            self.passedTrajectory = MAPolyline.init(coordinates: &(self.coordinatesBuffer), count: UInt(bufferCount) - 1)
+//            self.mapView.remove(self.passedTrajectory)
             
 //            buffer.deallocate(capacity: bufferCount)
         }

@@ -13,7 +13,7 @@ import DJISDK
 public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJIFlightControllerDelegate {
     
     var appDelegate: AppDelegate? = nil
-    let connectedProduct: DJIBaseProduct? = nil
+    var connectedProduct: DJIBaseProduct? = nil
     var sentCmds: NSMutableDictionary?
     
     public override init() {
@@ -31,32 +31,55 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
     
     // MARK: -- OnBoardSDK Communication
     public func commandIDStringKeyFromData(data: NSData) -> String {
-        var cmdId: UInt16?
-        data.getBytes(&cmdId, length: cmdId!.bitWidth)
-        let key = String(format: "%d", cmdId!)
+        var cmdId: UInt16 = 1
+        data.getBytes(&cmdId, length: UInt16.bitWidth)
+        let key = String(format: "%d", cmdId)
+        print(key)
+        self.appDelegate?.model?.addLog(newLogEntry: key)
         return key
     }
     
     public typealias MOSAckBlock = (NSData, NSError?) -> Void
     
-    public func sendData(data: NSData, with completion: () -> Void, and ackBlock: @escaping MOSAckBlock) {
+    public func sendData(data: NSData, with completion: @escaping () -> Void, and ackBlock: @escaping MOSAckBlock) {
+        
+        print("MOS send data")
+        self.appDelegate?.model?.addLog(newLogEntry: "MOS send data")
+        
         let fc: DJIFlightController? = (self.connectedProduct as? DJIAircraft)?.flightController
         fc?.delegate = self
-        fc?.sendData(toOnboardSDKDevice: data as Data, withCompletion: { (error) in
-            if error != nil {
-                
-            } else {
-                let key = self.commandIDStringKeyFromData(data: data)
-                self.sentCmds?.setObject(ackBlock, forKey: key as NSCopying)
-            }
-        })
+        
+        if fc == nil {
+            self.appDelegate?.model?.addLog(newLogEntry: "fc is nil")
+        } else {
+            fc!.sendData(toOnboardSDKDevice: data as Data, withCompletion: { [weak self] (error) in
+                print("send data to onboard device")
+                self!.appDelegate?.model?.addLog(newLogEntry: "send data to onboard device")
+                if error != nil {
+                    self!.appDelegate?.model?.addLog(newLogEntry: "send data error")
+                } else {
+                    self!.appDelegate?.model?.addLog(newLogEntry: "sending data")
+                    print("Sending data")
+                    
+                    
+                    let key = self!.commandIDStringKeyFromData(data: data)
+                    self?.appDelegate?.model?.addLog(newLogEntry: "onboard key: \(key)")
+                    self!.sentCmds!.setObject(ackBlock, forKey: key as NSCopying)
+                }
+//                completion()
+//                ackBlock(data, error as NSError?)
+                }
+            )
+        }
     }
     
     
     // MARK: -- DJIFlightControllerDelegate
     public func flightController(_ fc: DJIFlightController, didReceiveDataFromOnboardSDKDevice data: Data) {
+        print("flightController receiving data")
+        self.appDelegate?.model?.addLog(newLogEntry: "flightController receiving data")
         let key = self.commandIDStringKeyFromData(data: data as NSData)
-        let ackBlock: MOSAckBlock? = self.sentCmds?.object(forKey: key) as? MOSProductCommunicationManager.MOSAckBlock
+        let ackBlock: MOSAckBlock? = self.sentCmds!.object(forKey: key) as? MOSProductCommunicationManager.MOSAckBlock
         
         self.appDelegate?.model?.addLog(newLogEntry: "Received data from FC [\(data)]")
         
@@ -71,34 +94,30 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
     
     // MARK: -- DJISDKManagerDelegate
     public func appRegisteredWithError(_ error: Error?) {
-        if error != nil {
-            self.appDelegate?.model?.addLog(newLogEntry: "Error registering App: \(error!)")
-        } else {
-//            DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.1.103")
+//        if error != nil {
+//            self.appDelegate?.model?.addLog(newLogEntry: "Error registering App: \(error!)")
+//        } else {
+//            DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.1.101")
 //            DJISDKManager.startConnectionToProduct()
-//            if DJISDKManager.startConnectionToProduct() == true {
-//                print("Product connected")
-//            } else {
-//                print("product not recognized")
-//            }
-            self.appDelegate?.model?.addLog(newLogEntry: "Registration succeeded")
-//            self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product")
-
-//            let startedResult: Bool = DJISDKManager.startConnectionToProduct()
-//
-//            if startedResult {
-//                self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product started successfully")
-//            } else {
-//                self.appDelegate?.model?.addLog(newLogEntry: "Connecting to product failed to start")
-//            }
-        }
+//            self.appDelegate?.model?.addLog(newLogEntry: "MOS Registration succeeded")
+//        }
     }
 //
-////    public func productConnected(_ product: DJIBaseProduct?) {
-////        if product != nil {
-////            let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
-////            flightController!.delegate = self
-////        }
-////    }
+//    public func productConnected(_ product: DJIBaseProduct?) {
+//        if product != nil {
+//            self.connectedProduct = product
+//            let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
+//            flightController?.delegate = self
+//            self.appDelegate?.model?.addLog(newLogEntry: "product is connected")
+//            DJISDKManager.userAccountManager().logIntoDJIUserAccount(withAuthorizationRequired: false) { (state, error) in
+//                if error != nil {
+//                    self.appDelegate?.model?.addLog(newLogEntry: "Login failed")
+//                    print("Login failed")
+//                }
+//            }
+//        } else {
+//            self.appDelegate?.model?.addLog(newLogEntry: "product is nil")
+//        }
+//    }
 //
 }

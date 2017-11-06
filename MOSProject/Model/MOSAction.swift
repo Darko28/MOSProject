@@ -15,6 +15,7 @@ public class MOSAction: NSObject {
     var information: String? = ""
     var cmdID: NSNumber? = -1
     var acks: Bool? = false
+    var sensorData: Double? = 0.0
     
     public override init() {
         super.init()
@@ -23,6 +24,7 @@ public class MOSAction: NSObject {
         self.information = ""
         self.cmdID = -1;
         self.acks = false
+        self.sensorData = 0.0
     }
     
     public init(jsonDictionary: NSDictionary) {
@@ -51,6 +53,9 @@ public class MOSAction: NSObject {
         
         let jsonAck = jsonDictionary.object(forKey: "ack") as? Bool
         self.acks = jsonAck
+        
+        let jsonSensorData = jsonDictionary.object(forKey: "sensorData") as? Double
+        self.sensorData = jsonSensorData
     }
     
 }

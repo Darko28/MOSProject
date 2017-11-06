@@ -25,6 +25,7 @@ class MOSMainTabViewController: UITabBarController {
         var selectedViewController: MOSJSONDynamicController? = nil
         var allSections = self.appDelegate!.model!.jsonSections
         
+        // add two table view tab
         for index in 0..<allSections!.count {
             let section = allSections![index]
             let newController: MOSJSONDynamicController = MOSJSONDynamicController(style: .plain)
@@ -61,7 +62,7 @@ class MOSMainTabViewController: UITabBarController {
         
         self.appDelegate?.model?.addLog(newLogEntry: "Created UI")
         self.setViewControllers(viewControllers as? [UIViewController], animated: true)
-        self.selectedViewController = selectedViewController
+        self.selectedViewController = selectedViewController    // ??? maybe wrong?
         
     }    
 

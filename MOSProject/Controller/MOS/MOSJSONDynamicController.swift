@@ -61,18 +61,24 @@ class MOSJSONDynamicController: UITableViewController {
             
             self.appDelegate?.model?.addLog(newLogEntry: "Sending CmdID \(cmdId) with \(arguments.count) Arguments")
             cell!.commandResultLabel.text = "Sending ..."
-            print("\(cell!.commandResultLabel.text ?? "Send")")
+            print("\(cell!.commandResultLabel.text ?? "Sending ...")")
             
             self.appDelegate?.productCommunicationManager?.sendData(data: data, with: {
                 self.appDelegate?.model?.addLog(newLogEntry: "Sent CmdID \(cmdId)")
                 cell?.commandResultLabel.text = "Command sent!"
-            }, and: { (data, error) in
+            }, and: { [weak self] (data, error) in
                 let ackData: NSData = data.subdata(with: NSMakeRange(2, data.length - 2)) as NSData
-                var ackValue: UInt16 = 0
-                ackData.getBytes(&ackValue, length: UInt16.bitWidth)
+                print("ackData: \(ackData)")
+                self?.appDelegate?.model?.addLog(newLogEntry: "ackData: \(ackData.bytes)")
+                self?.appDelegate?.model?.addLog(newLogEntry: "ackData: \(ackData.length)")
                 
-                let responseMessage = "Ack \(ackValue)"
-                self.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage)] for CmdID \(cmdId)")
+                var ackValue: UInt16 = 7
+                ackData.getBytes(&ackValue, length: UInt16.bitWidth)
+                print("\(UInt16.bitWidth)")
+                self?.appDelegate?.model?.addLog(newLogEntry: "\(UInt16.bitWidth)")
+
+                let responseMessage = "Ack: \(ackValue)"
+                self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage)] for CmdID \(cmdId)")
                 
                 cell?.commandResultLabel.text = responseMessage
             })
