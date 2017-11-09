@@ -243,7 +243,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             if ENTER_DEBUG_MODE {
                 DJISDKManager.enableBridgeMode(withBridgeAppIP: DEBUG_ID)
             }
-            self.productConnected(DJISDKManager.product())
+//            self.productConnected(DJISDKManager.product())
             self.appDelegate?.model?.addLog(newLogEntry: "waypoint registration succeed")
             DJISDKManager.startConnectionToProduct()
         }

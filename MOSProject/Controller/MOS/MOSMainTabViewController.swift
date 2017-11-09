@@ -62,7 +62,8 @@ class MOSMainTabViewController: UITabBarController {
         
         self.appDelegate?.model?.addLog(newLogEntry: "Created UI")
         self.setViewControllers(viewControllers as? [UIViewController], animated: true)
-        self.selectedViewController = selectedViewController    // ??? maybe wrong?
+//        self.selectedViewController = selectedViewController    // ??? maybe wrong?
+        self.selectedViewController = viewControllers.lastObject as? UIViewController
         
     }    
 

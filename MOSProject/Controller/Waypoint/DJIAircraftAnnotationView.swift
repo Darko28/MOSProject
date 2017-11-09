@@ -61,6 +61,7 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate, DJIFlightC
 //        self.aircraftImageView.sizeToFit()
 //    }
     
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
             print("aircraft selected")
             if self.isSelected == selected {

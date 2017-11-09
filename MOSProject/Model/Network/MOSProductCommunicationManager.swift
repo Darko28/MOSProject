@@ -18,12 +18,14 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
     var appDelegate: AppDelegate? = nil
     var connectedProduct: DJIBaseProduct? = nil
     var sentCmds: NSMutableDictionary?
+    var fc: DJIFlightController?
+    var state: DJIFlightControllerState?
     
     public override init() {
         super.init()
         self.sentCmds = NSMutableDictionary()
         self.appDelegate = UIApplication.shared.delegate as? AppDelegate
-        self.registerWithProduct()
+//        self.registerWithProduct()
     }
     
     public func registerWithProduct() {
@@ -55,6 +57,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
             if fc == nil {
                 self.appDelegate?.model?.addLog(newLogEntry: "fc is nil")
             } else {
+                self.appDelegate?.model?.addLog(newLogEntry: "productManager fc is not nil")
                 //            DispatchQueue.global().async {
                 fc!.sendData(toOnboardSDKDevice: data as Data, withCompletion: { [weak self] (error) in
                     print("send data to onboard device")
@@ -70,7 +73,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
                         self?.appDelegate?.model?.addLog(newLogEntry: "onboard key: \(key)")
                         self!.sentCmds!.setObject(ackBlock, forKey: key as NSCopying)
                     }
-                    //                completion()
+                    completion()
                     //                ackBlock(data, error as NSError?)
                     }
                 )
@@ -107,7 +110,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
                 DJISDKManager.enableBridgeMode(withBridgeAppIP: DEBUG_ID)
             }
             DJISDKManager.startConnectionToProduct()
-//            self.productConnected(DJISDKManager.product())
+            self.productConnected(DJISDKManager.product())
             self.appDelegate?.model?.addLog(newLogEntry: "MOS Registration succeeded")
         }
     }

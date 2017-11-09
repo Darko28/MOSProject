@@ -15,6 +15,8 @@ class MOSJSONDynamicController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        self.appDelegate?.productCommunicationManager?.registerWithProduct()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -30,6 +32,10 @@ class MOSJSONDynamicController: UITableViewController {
         let currentEdgeInset: UIEdgeInsets = self.tableView.contentInset
         self.tableView.contentInset = UIEdgeInsetsMake(20, currentEdgeInset.left, 50, currentEdgeInset.right)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.appDelegate?.productCommunicationManager?.registerWithProduct()
     }
 
     override func didReceiveMemoryWarning() {

@@ -32,7 +32,8 @@ class DJIAircraftAnnotation: MAAnimatedAnnotation {
     func setCoordinate(_ coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
     }
-        
+    
+    
 //    override func rotateDegree() -> CLLocationDirection {
 //        if rootVC.aircraftState != nil {
 //            return (rootVC.aircraftState!.attitude.yaw * .pi) / 180.0
