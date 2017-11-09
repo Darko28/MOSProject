@@ -224,8 +224,6 @@
 		A266DADA1F97A0BC006B2EDD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				A266DAE61F987D2F006B2EDD /* MOSDynamicTableViewCell.swift */,
-				A266DAE71F987D2F006B2EDD /* MOSDynamicTableViewCell.xib */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -262,6 +260,8 @@
 			children = (
 				A266DAEA1F988026006B2EDD /* MOSMainTabViewController.swift */,
 				A266DAEC1F9881BC006B2EDD /* MOSJSONDynamicController.swift */,
+				A266DAE61F987D2F006B2EDD /* MOSDynamicTableViewCell.swift */,
+				A266DAE71F987D2F006B2EDD /* MOSDynamicTableViewCell.xib */,
 				A266DAEE1F9882C9006B2EDD /* MOSLogConsoleViewController.swift */,
 				A266DAEF1F9882C9006B2EDD /* MOSLogConsoleViewController.xib */,
 				A266DAF21F9882DB006B2EDD /* AdvancedViewController.swift */,

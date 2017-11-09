@@ -28,7 +28,7 @@ public class MOSModel: NSObject {
         } catch {
             print("URL file not exists.")
         }
-        //        let error: Error? = nil
+        
         var jsonConfigFile: NSDictionary = NSDictionary()
         do {
             let jsonConfigFileTemp: NSDictionary = try (JSONSerialization.jsonObject(with: configFileContent, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary)
@@ -42,6 +42,8 @@ public class MOSModel: NSObject {
         let allKeys: NSArray = jsonConfigFile.allKeys as NSArray
         
         for index in 0..<allKeys.count {
+            print("allKeys: \(allKeys.count)")
+            
             let sectionName: String = allKeys.object(at: index) as! String
             let jsonContent = jsonConfigFile.object(forKey: sectionName)
             let newSection: MOSSection = MOSSection(sectionName: sectionName, jsonContent: jsonContent as! Array<Any>)
@@ -49,6 +51,7 @@ public class MOSModel: NSObject {
             self.jsonSections!.append(newSection)
         }
     }
+    
     
     public typealias MOSModelLogChangedBlock = () -> Void
     var logChangedBlock: MOSModelLogChangedBlock? = nil
@@ -60,8 +63,6 @@ public class MOSModel: NSObject {
         if self.logChangedBlock != nil  {
             print("logChangedBlock is not equal to nil\n")
             self.logChangedBlock!()
-        } else {
-            print("logChangedBlock is nil")
         }
     }
     

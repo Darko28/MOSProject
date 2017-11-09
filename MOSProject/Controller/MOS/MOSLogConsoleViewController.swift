@@ -26,7 +26,9 @@ class MOSLogConsoleViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.updateLogView()
+//        DispatchQueue.main.async {
+            self.updateLogView()
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,7 +66,9 @@ class MOSLogConsoleViewController: UIViewController {
                 fullLog = "\(fullLog) + \(timeStamp) +\(log)\n"
             }
         }
-        self.logView.text = fullLog
+        DispatchQueue.main.async {
+            self.logView.text = fullLog
+        }
     }
     
     /*

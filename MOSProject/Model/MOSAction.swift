@@ -24,10 +24,11 @@ public class MOSAction: NSObject {
         self.information = ""
         self.cmdID = -1;
         self.acks = false
-        self.sensorData = 0.0
+        self.sensorData = 0.1
     }
     
     public init(jsonDictionary: NSDictionary) {
+        
         let jsonKey = jsonDictionary.object(forKey: "key") as? String
         if let _ = jsonKey {
             self.key = jsonKey
@@ -54,8 +55,8 @@ public class MOSAction: NSObject {
         let jsonAck = jsonDictionary.object(forKey: "ack") as? Bool
         self.acks = jsonAck
         
-        let jsonSensorData = jsonDictionary.object(forKey: "sensorData") as? Double
-        self.sensorData = jsonSensorData
+//        let jsonSensorData = jsonDictionary.object(forKey: "sensorData") as? Double
+//        self.sensorData = jsonSensorData
     }
     
 }
