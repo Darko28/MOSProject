@@ -40,7 +40,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
         data.getBytes(&cmdId, length: UInt16.bitWidth)
         let key = String(format: "%d", cmdId)
         print(key)
-        self.appDelegate?.model?.addLog(newLogEntry: key)
+        self.appDelegate?.model?.addLog(newLogEntry: "commandId: \(key)")
         return key
     }
     
@@ -73,7 +73,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
                         self?.appDelegate?.model?.addLog(newLogEntry: "onboard key: \(key)")
                         self!.sentCmds!.setObject(ackBlock, forKey: key as NSCopying)
                     }
-                    completion()
+//                    completion()
                     //                ackBlock(data, error as NSError?)
                     }
                 )
@@ -87,7 +87,8 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
         
             print("flightController receiving data")
             self.appDelegate?.model?.addLog(newLogEntry: "flightController receiving data")
-            let key = self.commandIDStringKeyFromData(data: data as NSData)
+//            let key = self.commandIDStringKeyFromData(data: data as NSData)
+            let key = "47"
             let ackBlock: MOSAckBlock? = self.sentCmds!.object(forKey: key) as? MOSProductCommunicationManager.MOSAckBlock
             
             self.appDelegate?.model?.addLog(newLogEntry: "Received data from FC [\(data)]")
