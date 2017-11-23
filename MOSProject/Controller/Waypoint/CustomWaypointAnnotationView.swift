@@ -39,7 +39,8 @@ class CustomWaypointAnnotationView: MAPinAnnotationView, DJIFlightControllerDele
             if selected {
                 if self.calloutView == nil {
                     self.calloutView = CustomWaypointCalloutView.init(frame: CGRect(x: 0, y: 0, width: kCalloutWidth, height: kCalloutHeight))
-                    self.calloutView?.center = CGPoint(x: self.bounds.width / 2 + self.calloutOffset.x, y: -((self.calloutView?.bounds.height)! / 2 + self.calloutOffset.y))
+//                    self.calloutView?.center = CGPoint(x: self.bounds.width / 2 + self.calloutOffset.x, y: -((self.calloutView?.bounds.height)! / 2 + self.calloutOffset.y))
+                    self.calloutView?.center = CGPoint(x: self.bounds.width / 2, y: 0)
                 }
                 self.calloutView?.setImage(image: UIImage(named: "calloutIcon")!)
                 self.calloutView?.setTitle(title: self.annotation.title!)

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.model = MOSModel()
         self.model!.loadConfiguration()
-        self.productCommunicationManager = MOSProductCommunicationManager()
+//        self.productCommunicationManager = MOSProductCommunicationManager()
         
         return true
     }

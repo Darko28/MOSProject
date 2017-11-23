@@ -27,7 +27,6 @@ class CustomWaypointCalloutView: UIView {
     var subtitleLabel: UILabel?
     var titleLabel: UILabel!
     
-    var titleTextView: UITextView!
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -92,16 +91,16 @@ class CustomWaypointCalloutView: UIView {
         self.titleLabel = UILabel(frame: CGRect(x: kPortraitMargin * 2 + kPortraitWidth, y: kPortraitMargin, width: kTitleWidth, height: kTitleHeight))
         self.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
         self.titleLabel.textColor = UIColor.white
-        self.titleLabel.text = "title"
+        self.titleLabel.text = ""
+        self.titleLabel.adjustsFontSizeToFitWidth = true
         self.addSubview(self.titleLabel)
         
         self.subtitleLabel = UILabel(frame: CGRect(x: kPortraitMargin * 2 + kPortraitWidth, y: kCalloutHeight - kTitleHeight - kPortraitMargin - kArrowHeight, width: kTitleWidth, height: kTitleHeight))
         self.subtitleLabel?.font = UIFont.systemFont(ofSize: 14)
         self.subtitleLabel?.textColor = UIColor.white
-        self.subtitleLabel?.text = "subtitle"
-        self.addSubview(self.subtitleLabel!)
-        
-//        self.titleTextView = UITextView(frame: CGRect(x: kPortraitMargin * 2 + kPortraitWidth, y: kPortraitMargin, width: kTitleWidth, height: kTitleHeight))
+        self.subtitleLabel?.text = ""
+        self.subtitleLabel?.adjustsFontSizeToFitWidth = true
+        self.addSubview(self.subtitleLabel!)        
     }
     
     func setTitle(title: String) {

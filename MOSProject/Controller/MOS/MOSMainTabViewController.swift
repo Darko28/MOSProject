@@ -58,11 +58,11 @@ class MOSMainTabViewController: UITabBarController {
         let waypointVC = DJIRootViewController(nibName: "DJIRootViewController", bundle: Bundle.main)
         waypointVC.tabBarItem = UITabBarItem(title: "Waypoint", image: UIImage(named: "three"), tag: index + 1)
         waypointVC.title = "Waypoint"
+//        waypointVC.navigationController?.navigationBar.isHidden = true
         viewControllers.add(waypointVC)
         
         self.appDelegate?.model?.addLog(newLogEntry: "Created UI")
         self.setViewControllers(viewControllers as? [UIViewController], animated: true)
-//        self.selectedViewController = selectedViewController    // ??? maybe wrong?
         self.selectedViewController = viewControllers.lastObject as? UIViewController
         
     }    

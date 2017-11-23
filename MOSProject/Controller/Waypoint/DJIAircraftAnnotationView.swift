@@ -23,6 +23,7 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate, DJIFlightC
         set {
 //            self.aircraftImageView.transform = CGAffineTransform(rotationAngle: newValue)
             self.transform = CGAffineTransform(rotationAngle: newValue)
+            self.calloutView?.transform = CGAffineTransform(rotationAngle: -newValue)
         }
         get {
             return self.rotateDegree
@@ -39,6 +40,8 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate, DJIFlightC
     var connectedProduct: DJIBaseProduct? = nil
     var sentCmds: NSMutableDictionary? = NSMutableDictionary()
 
+    var updateTimer: Timer?
+    
     
     override init!(annotation: MAAnnotation!, reuseIdentifier: String!) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -47,8 +50,7 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate, DJIFlightC
 //        self.isUserInteractionEnabled = true
 //        self.aircraftImageView = UIImageView()
 //        self.addSubview(aircraftImageView)
-        self.rotateDegree = 0
-        
+        self.rotateDegree = 0        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,38 +65,63 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate, DJIFlightC
     
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-            print("aircraft selected")
-            if self.isSelected == selected {
-                return
+        
+        //self.startTimer()
+        
+        print("aircraft selected")
+        if self.isSelected == selected {
+            //self.startTimer()
+            if self.goAction != nil {
+                
+                print("GGoAction is not nil")
+                
+                let cmdId: NSNumber? = self.actionModel?.cmdID
+                let arguments = NSArray()
+                
+                self.goAction!(cmdId!, arguments)
             }
-            if selected {
-                if self.calloutView == nil {
-                    self.calloutView = CustomWaypointCalloutView.init(frame: CGRect(x: 0, y: 0, width: kCalloutWidth, height: kCalloutHeight))
-                    self.calloutView?.center = CGPoint(x: self.bounds.width / 2 + self.calloutOffset.x, y: -((self.calloutView?.bounds.height)! / 2 + self.calloutOffset.y))
-                }
-                //            self.calloutView?.image = UIImage(named: "calloutIcon")
-                //            self.calloutView?.title = self.annotation.title
-                //            self.calloutView?.subTitle = self.annotation.subtitle
+            
+            //            return
+        }
+        
+        
+        if selected {
+            //self.startTimer()
+            if self.calloutView == nil {
+                self.calloutView = CustomWaypointCalloutView.init(frame: CGRect(x: 0, y: 0, width: kCalloutWidth, height: kCalloutHeight))
+                self.calloutView?.center = CGPoint(x: self.bounds.width / 2 + self.calloutOffset.x, y: -((self.calloutView?.bounds.height)! / 2 + self.calloutOffset.y))
+//                self.calloutView?.center = CGPoint(x: self.bounds.width / 2, y: -((self.calloutView?.bounds.height)! / 2))
+//                self.calloutView?.center = CGPoint.zero
+            }
+            //            self.calloutView?.image = UIImage(named: "calloutIcon")
+            //            self.calloutView?.title = self.annotation.title
+            //            self.calloutView?.subTitle = self.annotation.subtitle
+            DispatchQueue.main.async {
                 self.calloutView?.setImage(image: UIImage(named: "calloutIcon")!)
                 self.calloutView?.setTitle(title: self.annotation.title!)
                 self.calloutView?.setSubTitle(subTitle: self.annotation.subtitle!)
+            }
+//            self.calloutView?.setImage(image: UIImage(named: "calloutIcon")!)
+//            self.calloutView?.setTitle(title: self.annotation.title!)
+//            self.calloutView?.setSubTitle(subTitle: self.annotation.subtitle!)
+            
+            if self.goAction != nil {
                 
-                if self.goAction != nil {
-                    
-                    print("calloutView goAction is not nil")
-                    
-                    let cmdId: NSNumber? = self.actionModel?.cmdID
-                    let arguments = NSArray()
-                    
-                    self.goAction!(cmdId!, arguments)
-                }
+                print("calloutView goAction is not nil")
                 
-                self.addSubview(self.calloutView!)
-            } else {
-                self.calloutView?.removeFromSuperview()
+                let cmdId: NSNumber? = self.actionModel?.cmdID
+                let arguments = NSArray()
+                
+                self.goAction!(cmdId!, arguments)
             }
             
-            super.setSelected(selected, animated: animated)
+            self.addSubview(self.calloutView!)
+        } else {
+           // self.stopTimer()
+            self.calloutView?.removeFromSuperview()
+        }
+        
+        super.setSelected(selected, animated: animated)
     }
     
     public func populateWithActionModel(actionModel: MOSAction) {
@@ -108,6 +135,17 @@ class DJIAircraftAnnotationView: MAAnnotationView, MAMapViewDelegate, DJIFlightC
             self.calloutView?.setSubTitle(subTitle: "\(actionModel.sensorData ?? 2)")
 //        self.calloutView?.setSubTitle(subTitle: actionModel.cmdID!.stringValue)
     }
-
-
+    
+    func updateCallout() {
+        if self.goAction != nil {
+            
+            print("updateCallout goAction is not nil")
+            
+            let cmdId: NSNumber? = self.actionModel?.cmdID
+            let arguments = NSArray()
+            
+            self.goAction!(cmdId!, arguments)
+        }
+    }
+    
 }

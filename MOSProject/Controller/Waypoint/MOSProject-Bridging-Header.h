@@ -5,3 +5,5 @@
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <MAMapKit/MAMapKit.h>
+
+#import "WGS84-GCJ02.h"

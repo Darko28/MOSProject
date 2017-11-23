@@ -21,6 +21,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     @IBOutlet weak var topView: UIView!
     
     var createWaypointButton: UIButton!
+    var deleteWaypointButton: UIButton!
     
     var latitudeLabel: UILabel!
     var longitudeLabel: UILabel!
@@ -44,9 +45,13 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     
     var waypointMission: DJIMutableWaypointMission?
     
-    var missionOperator: DJIWaypointMissionOperator? = {
-        return DJISDKManager.missionControl()?.waypointMissionOperator()
-    }()
+//    var missionOperator: DJIWaypointMissionOperator? = {
+//        return DJISDKManager.missionControl()!.waypointMissionOperator()
+//    }()
+    
+    func missionOperator() -> DJIWaypointMissionOperator? {
+        return DJISDKManager.missionControl()!.waypointMissionOperator()
+    }
     
     var waypointCoordinates: Array<CLLocationCoordinate2D> = []
     var waypointTrace: MAPolyline?
@@ -154,7 +159,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.mapView.isUserInteractionEnabled = true
         
         self.createWaypointButton = UIButton(frame: CGRect(x: 10, y: ((self.gsButtonVC?.view.frame.size.height)! + self.topView.frame.origin.y + self.topView.frame.size.height + 48), width: 64, height: 24))
-        self.createWaypointButton.backgroundColor = UIColor.darkGray
+        self.createWaypointButton.backgroundColor = UIColor.gray
+        self.createWaypointButton.setTitleShadowColor(UIColor.black, for: UIControlState.highlighted)
+        self.createWaypointButton.reversesTitleShadowWhenHighlighted = true
         self.createWaypointButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         self.createWaypointButton.titleLabel?.textColor = UIColor.white
         self.createWaypointButton.setTitle("Set", for: .normal)
@@ -162,7 +169,18 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.createWaypointButton.isHidden = true
         self.mapView.addSubview(self.createWaypointButton)
         
-        self.latitudeLabel = UILabel(frame: CGRect(x: self.mapView.bounds.size.width - 215, y: (self.topView.frame.origin.y + self.topView.frame.size.height + 28), width: 80, height: 20))
+        self.deleteWaypointButton = UIButton(frame: CGRect(x: 10, y: ((self.gsButtonVC?.view.frame.size.height)! + self.topView.frame.origin.y + self.topView.frame.size.height + 74), width: 64, height: 24))
+        self.deleteWaypointButton.backgroundColor = UIColor.gray
+        self.deleteWaypointButton.setTitleShadowColor(UIColor.black, for: UIControlState.highlighted)
+        self.deleteWaypointButton.reversesTitleShadowWhenHighlighted = true
+        self.deleteWaypointButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        self.deleteWaypointButton.titleLabel?.textColor = UIColor.white
+        self.deleteWaypointButton.setTitle("Delete", for: .normal)
+        self.deleteWaypointButton.addTarget(self, action: #selector(deleteWaypoint(_:)), for: .touchUpInside)
+        self.deleteWaypointButton.isHidden = true
+        self.mapView.addSubview(self.deleteWaypointButton)
+        
+       self.latitudeLabel = UILabel(frame: CGRect(x: self.mapView.bounds.size.width - 215, y: (self.topView.frame.origin.y + self.topView.frame.size.height + 28), width: 80, height: 20))
         self.latitudeLabel.text = "latitude:"
         self.mapView.addSubview(self.latitudeLabel)
         
@@ -230,6 +248,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.tapGesture = UITapGestureRecognizer(target: self, action: #selector(addWaypoints(_:)))
         self.cancelTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap(_:)))
         //        self.mapView.addGestureRecognizer(self.tapGesture!)
+        
+        self.sentCmds = NSMutableDictionary()
+
     }
     
     func appRegisteredWithError(_ error: Error?) {
@@ -243,7 +264,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             if ENTER_DEBUG_MODE {
                 DJISDKManager.enableBridgeMode(withBridgeAppIP: DEBUG_ID)
             }
-            //            self.productConnected(DJISDKManager.product())
+//                        self.productConnected(DJISDKManager.product())
             self.appDelegate?.model?.addLog(newLogEntry: "waypoint registration succeed")
             DJISDKManager.startConnectionToProduct()
         }
@@ -251,6 +272,8 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     
     func productConnected(_ product: DJIBaseProduct?) {
         if product != nil {
+            self.connectedProduct = product
+            
             let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
             flightController?.delegate = self
             self.appDelegate?.model?.addLog(newLogEntry: "waypoint product is connected")
@@ -277,7 +300,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             homeAnnotation?.title = "home pm2.5"
             homeAnnotation?.subtitle = "home pm10"
             mapView.addAnnotation(self.homeAnnotation)
-            //                region.center = AMapCoordinateConvert(self.droneLocation!, .GPS)
+//                            region.center = AMapCoordinateConvert(self.droneLocation!, .GPS)
             region.center = self.homeLocation!
             region.span.latitudeDelta = 0.001
             region.span.longitudeDelta = 0.001
@@ -331,6 +354,8 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     
     @objc func createWaypoints(_ sender: UIButton) {
         
+//        self.createWaypointButton.showsTouchWhenHighlighted = true
+        
         print("create waypoint")
         //        if !self.isEditingPoints {
         if self.aircraftStatus?.aircraftLocation?.coordinate != nil {
@@ -349,6 +374,11 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             self.appDelegate?.model?.addLog(newLogEntry: "aircraft location is nil")
         }
         //        }
+    }
+    
+    @objc func deleteWaypoint(_ sender: UIButton) {
+        self.mapController?.deleteLastWaypointInMapView(self.mapView)
+        self.aircraftCoords.removeLast()
     }
     
     @objc func uploadCoordinates(_ sender: UIButton) {
@@ -418,8 +448,10 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         if mode == DJIGSViewMode.EditMode {
             self.focusMap()
             self.createWaypointButton.isHidden = false
+            self.deleteWaypointButton.isHidden = false
         } else {
             self.createWaypointButton.isHidden = true
+            self.deleteWaypointButton.isHidden = true
         }
     }
     
@@ -474,7 +506,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     
     func startBtnActionInGSButtonVC(GSBtnVC: DJIGSButtonController) {
         print("Start waypoint mission!")
-        self.missionOperator?.startMission(completion: { [weak self] (error) in
+        self.missionOperator()?.startMission(completion: { [weak self] (error) in
             if error != nil {
                 let alertController = UIAlertController(title: "Start waypoint mission error", message: "\(error!.localizedDescription)", preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -495,7 +527,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     
     func stopBtnActionInGSButtonVC(GSBtnVC: DJIGSButtonController) {
         print("stop waypoint mission")
-        self.missionOperator?.stopMission(completion: { [weak self] (error) in
+        self.missionOperator()?.stopMission(completion: { [weak self] (error) in
             if error != nil {
                 let alertController = UIAlertController(title: "Stop waypoint mission error", message: "\(error!.localizedDescription)", preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -564,7 +596,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.waypointMission?.headingMode = DJIWaypointMissionHeadingMode(rawValue: UInt((self.waypointConfigVC?.headingSegmentedControl.selectedSegmentIndex)!))!
         self.waypointMission?.finishedAction = DJIWaypointMissionFinishedAction(rawValue: UInt8((self.waypointConfigVC?.actionSegmentedControl.selectedSegmentIndex)!))!
         
-        if self.missionOperator == nil {
+        if self.missionOperator() == nil {
             self.appDelegate?.model?.addLog(newLogEntry: "missionOperator is nil")
         }
         
@@ -578,9 +610,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         //            }
         //        })
         
-        self.missionOperator?.load(self.waypointMission!)
+        self.missionOperator()?.load(self.waypointMission!)
         
-        self.missionOperator?.uploadMission(completion: { [weak self] (error) in
+        self.missionOperator()?.uploadMission(completion: { [weak self] (error) in
             if error != nil {
                 print("Upload mission failed")
                 self!.appDelegate?.model?.addLog(newLogEntry: "Upload mission failed")
@@ -596,7 +628,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             }
         })
         
-        self.missionOperator?.addListener(toFinished: self, with: DispatchQueue.main, andBlock: { [weak self] (error) in
+        self.missionOperator()?.addListener(toFinished: self, with: DispatchQueue.main, andBlock: { [weak self] (error) in
             if error != nil {
                 print("Mission execution failed")
                 self!.appDelegate?.model?.addLog(newLogEntry: "mission execution failed")
@@ -633,6 +665,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     var actionModel: MOSAction? = MOSAction()
     var section: MOSSection? = MOSSection()
     
+    var annotationViewIndex: Int = 0
+    var annotationBuffer1: [MAAnnotationView] = []
+    
     func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
         
         if annotation.isKind(of: DJIAircraftAnnotation.self) {
@@ -648,8 +683,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             aircraftAnnoView.canShowCallout = false
             //            (aircraftView as! DJIAircraftAnnotationView).image = UIImage(named: "aircraft.png")
             //            (aircraftView as! DJIAircraftAnnotationView).canShowCallout = false
-            
-            
+            /*
             // Onboard Communication
             let allSections = self.appDelegate!.model!.jsonSections
             
@@ -673,7 +707,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 
                 aircraftAnnoView?.calloutView?.setTitle(title: "Sending...")
                 
-                self.appDelegate?.productCommunicationManager?.sendData(data: data, with: {
+                self.sendData(data: data, with: {
                     self.appDelegate?.model?.addLog(newLogEntry: "Sent CmdID \(cmdId)")
                     aircraftAnnoView?.calloutView?.setTitle(title: "Command sent!")
                 }, and: { [weak self] (data, error) in
@@ -693,11 +727,23 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                     let responseMessage = String.init(data: data as Data, encoding: String.Encoding.utf8)
 //                    let responseMessage = "\(data)"
 //                    self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage)] for CmdID \(cmdId)")
+//                    var displayMessage: String?
+//                    displayMessage = (responseMessage?.contains("pm2.5"))! ? responseMessage?.replacingOccurrences(of: "pm2.5", with: "") : responseMessage
+//                    displayMessage = responseMessage?.
+
                     self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage ?? "mapview response nil")] for CmdID \(cmdId)")
 
                     aircraftAnnoView?.calloutView?.setTitle(title: responseMessage ?? "map response nil")
                 })
             }
+ */
+            
+//            if self.aircraftAnnoView.isSelected {
+//                print("timer select")
+//                // Timer
+//                self.startTimer()
+//            }
+            
             return aircraftAnnoView
             
         } else if (annotation.isKind(of: MAPointAnnotation.self)) {
@@ -731,10 +777,11 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 
                 var cmdIdUInt = cmdId.uintValue
                 let data: NSData = NSData(bytes: &cmdIdUInt, length: cmdIdUInt.bitWidth)
+                DispatchQueue.main.async {
+                    annotationView?.calloutView?.setTitle(title: "Sending...")
+                }
                 
-                annotationView?.calloutView?.setTitle(title: "Sending...")
-                
-                self.appDelegate?.productCommunicationManager?.sendData(data: data, with: {
+                self.sendData(data: data, with: {
                     self.appDelegate?.model?.addLog(newLogEntry: "Sent CmdID \(cmdId)")
                     annotationView?.calloutView?.setTitle(title: "Command sent!")
                 }, and: { [weak self] (data, error) in
@@ -751,7 +798,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                     let responseMessage = "Ack: \(ackValue)"
                     self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage)] for CmdID \(cmdId)")
                     
-                    annotationView?.calloutView?.setTitle(title: responseMessage)
+                    DispatchQueue.main.async {
+                        annotationView?.calloutView?.setTitle(title: responseMessage)
+                    }
                 })
             }
             
@@ -765,11 +814,19 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             //                annotationView.goAction!(cmdId!, arguments)
             //            }
             
+            
+            annotationViewIndex += 1
+            annotationView.zIndex = annotationViewIndex
+            
+            annotationBuffer1.append(annotationView)
+            
             return annotationView
         }
         
         return nil
     }
+    
+    var updateSensorTimer: Timer?
     
     func mapView(_ mapView: MAMapView!, didSelect view: MAAnnotationView!) {
         
@@ -801,7 +858,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 
                 annotationView?.calloutView?.setTitle(title: "Sending...")
                 
-                self.appDelegate?.productCommunicationManager?.sendData(data: data, with: {
+                self.sendData(data: data, with: {
                     self.appDelegate?.model?.addLog(newLogEntry: "Sent CmdID \(cmdId)")
                     annotationView?.calloutView?.setTitle(title: "Command sent!")
                 }, and: { [weak self] (data, error) in
@@ -823,6 +880,8 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             }
             
         } else if view.isKind(of: DJIAircraftAnnotationView.self) {
+            
+            
             // Onboard Communication
             let allSections = self.appDelegate!.model!.jsonSections
             
@@ -846,7 +905,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 
                 self.aircraftAnnoView?.calloutView?.setTitle(title: "Sending...")
                 
-                self.appDelegate?.productCommunicationManager?.sendData(data: data, with: {
+                self.sendData(data: data, with: {
                     self.appDelegate?.model?.addLog(newLogEntry: "Sent CmdID \(cmdId)")
                     self.aircraftAnnoView?.calloutView?.setTitle(title: "Command sent!")
                 }, and: { [weak self] (data, error) in
@@ -865,19 +924,110 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
 //                    let responseMessage = String.init(data: data as Data, encoding: String.Encoding.utf8)
 //                    let responseMessage = "Ack: \(ackValue)"
                     let responseMessage = String.init(data: data as Data, encoding: String.Encoding.utf8)
+//                    var displayMessage: String?
+//                    displayMessage = (responseMessage?.contains("pm2.5"))! ? responseMessage?.replacingOccurrences(of: "pm2.5", with: "") : responseMessage
+
+//                    displayMessage = displayMessage?.replacingOccurrences(of: CharacterSet.whitespaces, with: "sensor")
 //                    let responseMessage = "\(data)"
 //                    self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage)] for CmdID \(cmdId)")
-                    self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage ?? "did select response nil")] for CmdID \(cmdId)")
+                    self!.appDelegate?.model?.addLog(newLogEntry: "Received DATA [\(responseMessage ?? "did select response nil")] for CmdID \(cmdId)")
 
-                    self!.aircraftAnnoView?.calloutView?.setTitle(title: responseMessage ?? "did response nil")
+                    let currentTime: Date = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    dateFormatter.locale = Locale.current
+                    dateFormatter.timeZone = TimeZone.current
+                    print("current date time: \(dateFormatter.string(from: currentTime))")
+                    
+//                    let timeInterval: TimeInterval = currentTime.timeIntervalSince1970
+//                    let timeStamp = Int(timeInterval)
+//                    print("current time stamp: \(timeStamp)")
+                    
+                    self?.aircraftAnnoView.calloutView?.setSubTitle(subTitle: responseMessage ?? "did response nil")
+                    self!.aircraftAnnoView?.calloutView?.setTitle(title: dateFormatter.string(from: currentTime))
                 })
             }
+ 
+            //self.updateSensor(updatedTimer: self.updateSensorTimer)
+//            if self.aircraftAnnoView.isSelected {
+                print("timer select")
+                // Timer
+                self.startTimer()
+//            }
+            
         }
         //        }
         
     }
     
+    func mapView(_ mapView: MAMapView!, didDeselect view: MAAnnotationView!) {
+        self.stopTimer()
+    }
     
+    func startTimer() {
+        if self.updateSensorTimer == nil {
+            self.updateSensorTimer = Timer(timeInterval: 2.8, target: self, selector: #selector(updateSensor(updatedTimer:)), userInfo: nil, repeats: true)
+            RunLoop.main.add(self.updateSensorTimer!, forMode: RunLoopMode.commonModes)
+            self.updateSensorTimer?.fire()
+        }
+    }
+    
+    func stopTimer() {
+        if self.updateSensorTimer != nil {
+            self.updateSensorTimer?.invalidate()
+            self.updateSensorTimer = nil
+        }
+    }
+    
+    @objc func updateSensor(updatedTimer: Timer?) {
+
+        // Onboard Communication
+        let allSections = self.appDelegate!.model!.jsonSections
+        
+        //            for index in 0..<allSections!.count {
+        //                let section = allSections![index]
+        //                self.section = section
+        //            }
+        
+        self.section = allSections?.last
+        
+        let action: MOSAction? = self.section!.actions!.last
+        
+        self.aircraftAnnoView.populateWithActionModel(actionModel: action!)
+        
+        
+        self.aircraftAnnoView!.goAction = { (cmdId: NSNumber, arguments: NSArray) in
+            
+            print("timer goAction")
+            
+            var cmdIdUInt = cmdId.uintValue
+            let data: NSData = NSData(bytes: &cmdIdUInt, length: cmdIdUInt.bitWidth)
+            
+            self.aircraftAnnoView?.calloutView?.setTitle(title: "Sending...")
+            
+            self.sendData(data: data, with: {
+                self.aircraftAnnoView?.calloutView?.setTitle(title: "Command sent!")
+            }, and: { [weak self] (data, error) in
+                let responseMessage = String.init(data: data as Data, encoding: String.Encoding.utf8)
+                self!.appDelegate?.model?.addLog(newLogEntry: "Timer data: \(responseMessage ?? "did select response nil") for CmdID \(cmdId)")
+                self!.aircraftAnnoView?.calloutView?.setTitle(title: responseMessage ?? "did response nil")
+                
+                let currentTime: Date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.locale = Locale.current
+                dateFormatter.timeZone = TimeZone.current
+                print("current date time: \(dateFormatter.string(from: currentTime))")
+                
+                self?.aircraftAnnoView.calloutView?.setSubTitle(subTitle: responseMessage ?? "did response nil")
+                self!.aircraftAnnoView?.calloutView?.setTitle(title: dateFormatter.string(from: currentTime))
+            })
+            //            self.aircraftAnnoView.setSelected(true, animated: false)
+        }
+        
+        self.aircraftAnnoView.updateCallout()
+    }
+        
     func mapView(_ mapView: MAMapView!, rendererFor overlay: MAOverlay!) -> MAOverlayRenderer! {
         if overlay.isKind(of: MAPolyline.self) {
             let polylineRenderer = MAPolylineRenderer(polyline: overlay as! MAPolyline!)
@@ -894,7 +1044,6 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     }
     
     func flightController(_ fc: DJIFlightController, didUpdate state: DJIFlightControllerState) {
-        
         self.fc = fc
         self.aircraftStatus = state
         self.droneLocation = state.aircraftLocation?.coordinate
@@ -903,6 +1052,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         //        }
         
         if self.droneLocation != nil {
+//            self.homeLocation = WGS84_GCJ02.marsGS2WorldGS((state.aircraftLocation?.coordinate)!)
             self.homeLocation = AMapCoordinateConvert((state.aircraftLocation?.coordinate)!, .GPS)
             self.droneLocation = AMapCoordinateConvert((state.aircraftLocation?.coordinate)!, .GPS)
             self.mapController!.updateAircraftLocation(self.droneLocation!, withMapView: self.mapView)
@@ -911,8 +1061,6 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             //            if mapController?.editPoints.count == 0 {
             //                self.aircraftAnnotation.coordinate = droneLocation!
             //            }
-        } else {
-            self.appDelegate?.model?.addLog(newLogEntry: "aircraftLocation is nil")
         }
         
         self.modeLabel.text = state.flightModeString
@@ -921,7 +1069,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.hsLabel.text = NSString.localizedStringWithFormat("%0.1f M/S", sqrtf(state.velocityX * state.velocityX + state.velocityY * state.velocityY)) as String
         self.altitudeLabel.text = String(format: "%.1f M", state.altitude)
         
-        if self.missionOperator?.currentState == DJIWaypointMissionState.executing {
+        if self.missionOperator()?.currentState == DJIWaypointMissionState.executing {
             if state.aircraftLocation != nil {
                 //            buffer[passedCoordinatesCount] = state.aircraftLocation!.coordinate
                 self.coordinatesBuffer.append(self.droneLocation!)
@@ -980,6 +1128,98 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         sumDistance = sum
         return sum
     }
+    
+    
+    
+    
+    
+//    var appDelegate: AppDelegate? = nil
+    var connectedProduct: DJIBaseProduct? = nil
+    var sentCmds: NSMutableDictionary?
+//    var fc: DJIFlightController?
+    var state: DJIFlightControllerState?
+    
+//    public override init() {
+//        super.init()
+//        self.sentCmds = NSMutableDictionary()
+//        self.appDelegate = UIApplication.shared.delegate as? AppDelegate
+//        //        self.registerWithProduct()
+//    }
+    
+//    public func registerWithProduct() {
+//        let registrationID = "4fbb7e69c745a7ac8635380c"
+//        self.appDelegate?.model?.addLog(newLogEntry: "Registering Product with ID: \(registrationID)")
+//        DJISDKManager.registerApp(with: self)
+//    }
+    
+    // MARK: -- OnBoardSDK Communication
+    public func commandIDStringKeyFromData(data: NSData) -> String {
+        var cmdId: UInt16 = 1
+        data.getBytes(&cmdId, length: UInt16.bitWidth)
+        let key = String(format: "%d", cmdId)
+        print(key)
+        self.appDelegate?.model?.addLog(newLogEntry: "commandId: \(key)")
+        return key
+    }
+    
+    public typealias MOSAckBlock = (NSData, NSError?) -> Void
+    
+    public func sendData(data: NSData, with completion: @escaping () -> Void, and ackBlock: @escaping MOSAckBlock) {
+        
+        print("MOS send data")
+        self.appDelegate?.model?.addLog(newLogEntry: "MOS send data")
+        
+        let fc: DJIFlightController? = (self.connectedProduct as? DJIAircraft)?.flightController
+        fc?.delegate = self
+        
+        if fc == nil {
+            self.appDelegate?.model?.addLog(newLogEntry: "fc is nil")
+        } else {
+            self.appDelegate?.model?.addLog(newLogEntry: "productManager fc is not nil")
+            //            DispatchQueue.global().async {
+            fc!.sendData(toOnboardSDKDevice: data as Data, withCompletion: { [weak self] (error) in
+                print("send data to onboard device")
+                self!.appDelegate?.model?.addLog(newLogEntry: "send data to onboard device")
+                if error != nil {
+                    self!.appDelegate?.model?.addLog(newLogEntry: "send data error")
+                } else {
+                    self!.appDelegate?.model?.addLog(newLogEntry: "sending data")
+                    print("Sending data")
+                    
+                    
+                    let key = self!.commandIDStringKeyFromData(data: data)
+                    self?.appDelegate?.model?.addLog(newLogEntry: "onboard key: \(key)")
+                    self!.sentCmds!.setObject(ackBlock, forKey: key as NSCopying)
+                }
+//                completion()
+                //                ackBlock(data, error as NSError?)
+                }
+            )
+            //            }
+        }
+    }
+    
+    
+    // MARK: -- DJIFlightControllerDelegate
+    public func flightController(_ fc: DJIFlightController, didReceiveDataFromOnboardSDKDevice data: Data) {
+        
+        print("flightController receiving data")
+        self.appDelegate?.model?.addLog(newLogEntry: "flightController receiving data")
+        //            let key = self.commandIDStringKeyFromData(data: data as NSData)
+        let key = "47"
+        let ackBlock: MOSAckBlock? = self.sentCmds!.object(forKey: key) as? MOSAckBlock
+        
+        self.appDelegate?.model?.addLog(newLogEntry: "Received data from FC [\(data)]")
+        
+        if ackBlock != nil {
+            ackBlock!(data as NSData, nil)
+        } else {
+            self.appDelegate?.model?.addLog(newLogEntry: "Received Non-ACK data [\(data)]")
+        }
+        
+        self.sentCmds?.removeObject(forKey: key)
+    }
+    
     
     /*
      // MARK: - Navigation

@@ -10,10 +10,10 @@ import Foundation
 import DJISDK
 
 
-let ENTER_DEBUG_MODE = true
-let DEBUG_ID = "192.168.1.104"
+let ENTER_DEBUG_MODE = false
+let DEBUG_ID = "192.168.1.108"
 
-public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJIFlightControllerDelegate {
+public class MOSProductCommunicationManager: NSObject, DJIFlightControllerDelegate {
     
     var appDelegate: AppDelegate? = nil
     var connectedProduct: DJIBaseProduct? = nil
@@ -31,7 +31,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
     public func registerWithProduct() {
         let registrationID = "4fbb7e69c745a7ac8635380c"
         self.appDelegate?.model?.addLog(newLogEntry: "Registering Product with ID: \(registrationID)")
-        DJISDKManager.registerApp(with: self)
+//        DJISDKManager.registerApp(with: self)
     }
     
     // MARK: -- OnBoardSDK Communication
@@ -73,7 +73,7 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
                         self?.appDelegate?.model?.addLog(newLogEntry: "onboard key: \(key)")
                         self!.sentCmds!.setObject(ackBlock, forKey: key as NSCopying)
                     }
-//                    completion()
+                    completion()
                     //                ackBlock(data, error as NSError?)
                     }
                 )
@@ -101,36 +101,36 @@ public class MOSProductCommunicationManager: NSObject, DJISDKManagerDelegate, DJ
             
             self.sentCmds?.removeObject(forKey: key)
     }
-    
-    // MARK: -- DJISDKManagerDelegate
-    public func appRegisteredWithError(_ error: Error?) {
-        if error != nil {
-            self.appDelegate?.model?.addLog(newLogEntry: "Error registering App: \(error!)")
-        } else {
-            if ENTER_DEBUG_MODE {
-                DJISDKManager.enableBridgeMode(withBridgeAppIP: DEBUG_ID)
-            }
-            DJISDKManager.startConnectionToProduct()
-            self.productConnected(DJISDKManager.product())
-            self.appDelegate?.model?.addLog(newLogEntry: "MOS Registration succeeded")
-        }
-    }
 //
-    public func productConnected(_ product: DJIBaseProduct?) {
-        if product != nil {
-            self.connectedProduct = product
-            let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
-            flightController?.delegate = self
-            self.appDelegate?.model?.addLog(newLogEntry: "product is connected")
-            DJISDKManager.userAccountManager().logIntoDJIUserAccount(withAuthorizationRequired: false) { (state, error) in
-                if error != nil {
-                    self.appDelegate?.model?.addLog(newLogEntry: "Login failed")
-                    print("Login failed")
-                }
-            }
-        } else {
-            self.appDelegate?.model?.addLog(newLogEntry: "product is nil")
-        }
-    }
-//
+//    // MARK: -- DJISDKManagerDelegate
+//    public func appRegisteredWithError(_ error: Error?) {
+//        if error != nil {
+//            self.appDelegate?.model?.addLog(newLogEntry: "Error registering App: \(error!)")
+//        } else {
+//            if ENTER_DEBUG_MODE {
+//                DJISDKManager.enableBridgeMode(withBridgeAppIP: DEBUG_ID)
+//            }
+//            DJISDKManager.startConnectionToProduct()
+//            self.productConnected(DJISDKManager.product())
+//            self.appDelegate?.model?.addLog(newLogEntry: "MOS Registration succeeded")
+//        }
+//    }
+////
+//    public func productConnected(_ product: DJIBaseProduct?) {
+//        if product != nil {
+//            self.connectedProduct = product
+//            let flightController = (DJISDKManager.product() as? DJIAircraft)?.flightController
+//            flightController?.delegate = self
+//            self.appDelegate?.model?.addLog(newLogEntry: "product is connected")
+//            DJISDKManager.userAccountManager().logIntoDJIUserAccount(withAuthorizationRequired: false) { (state, error) in
+//                if error != nil {
+//                    self.appDelegate?.model?.addLog(newLogEntry: "Login failed")
+//                    print("Login failed")
+//                }
+//            }
+//        } else {
+//            self.appDelegate?.model?.addLog(newLogEntry: "product is nil")
+//        }
+//    }
+////
 }

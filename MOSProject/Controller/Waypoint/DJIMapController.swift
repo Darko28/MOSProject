@@ -13,21 +13,35 @@ class DJIMapController: UIViewController {
     public var editPoints: Array<CLLocation> = []
     var aircraftAnnotation: DJIAircraftAnnotation? = nil
     public var pointList: Array<CLLocationCoordinate2D> = []
+    
+    var deletePoints: Array<CLLocationCoordinate2D> = []
         
     func wayPoints() -> [CLLocation] {
         return self.editPoints
     }
     
+    func addedWaypoints() -> [CLLocationCoordinate2D] {
+        return self.pointList
+    }
+    
     func addPoint(_ point: CGPoint, withMapView mapView: MAMapView) {
         let coordinate: CLLocationCoordinate2D = mapView.convert(point, toCoordinateFrom: mapView)
 //        let amapCoordinate: CLLocationCoordinate2D = AMapCoordinateConvert(coordinate, .GPS)
-        let location: CLLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        editPoints.append(location)
-        pointList.append(location.coordinate)
+        let wgs84Coordinate: CLLocationCoordinate2D = GCJ02_WGS84.gcj02ToWGS84(lat: coordinate.latitude, lon: coordinate.longitude)
+        let location: CLLocation = CLLocation(latitude: wgs84Coordinate.latitude, longitude: wgs84Coordinate.longitude)
+        print("\(coordinate)")
+        print("\(wgs84Coordinate)")
+        self.editPoints.append(location)
+        self.pointList.append(wgs84Coordinate)
+        self.deletePoints.append(coordinate)
+        
+//        let amapCoordinate: CLLocationCoordinate2D = AMapCoordinateConvert(location.coordinate, .GPS)
+        
         let annotation: MAPointAnnotation = MAPointAnnotation()
         annotation.title = "waypoint pm2.5"
         annotation.subtitle = "waypoint pm10"
         annotation.coordinate = coordinate
+        
         mapView.addAnnotation(annotation)
     }
     
@@ -86,18 +100,52 @@ class DJIMapController: UIViewController {
         }
     }
     
+    func deleteLastWaypointInMapView(_ mapView: MAMapView) {
+        if editPoints.count > 0 {
+            
+            let annos = mapView.annotations
+            for anno in annos! {
+                if (((anno as! MAAnnotation).coordinate.latitude) == deletePoints.last!.latitude) && (((anno as! MAAnnotation).coordinate.longitude) == deletePoints.last!.longitude) {
+                    let deleteAnno = anno
+                    if (!(anno as AnyObject).isEqual(self.aircraftAnnotation)) {
+                        mapView.removeAnnotation(deleteAnno as! MAAnnotation)
+                    }
+                }
+            }
+            
+//            let anno = mapView.annotations.last as! MAPointAnnotation
+//            anno.coordinate = (editPoints.last?.coordinate)!
+//
+//            mapView.removeAnnotation(anno)
+//            editPoints.removeLast()
+       }
+    }
+    
     func updateAircraftLocation(_ location: CLLocationCoordinate2D, withMapView mapView: MAMapView) {
             if self.aircraftAnnotation == nil {
                 print("aircraftAnnotation is nil, create an DJIAircraftAnnotation")
                 
-                let amapLocation = AMapCoordinateConvert(location, .GPS)
+//                let amapLocation = AMapCoordinateConvert(location, .GPS)
                 
-                self.aircraftAnnotation = DJIAircraftAnnotation(coordinate: amapLocation)
+//                let gc702Location = WGS84_GCJ02.transformFromWGS(toGCJ: location)
+//                let wgs84Location = WGS84_GCJ02.marsGS2WorldGS(location)
+                
+                self.aircraftAnnotation = DJIAircraftAnnotation(coordinate: location)
                 self.aircraftAnnotation?.title = "aircraft pm2.5"
                 self.aircraftAnnotation?.subtitle = "aircraft pm10"
                 mapView.addAnnotation(self.aircraftAnnotation)
             }
-            self.aircraftAnnotation!.setCoordinate(location)
+        self.aircraftAnnotation!.setCoordinate(location)
+    }
+    
+    func updateHomeLocation(_ location: CLLocationCoordinate2D, withMapView mapView: MAMapView) {
+        if self.aircraftAnnotation == nil {
+            self.aircraftAnnotation = DJIAircraftAnnotation(coordinate: location)
+            self.aircraftAnnotation?.title = "aircraft pm2.5"
+            self.aircraftAnnotation?.subtitle = "aircraft pm10"
+            mapView.addAnnotation(self.aircraftAnnotation)
+        }
+        self.aircraftAnnotation!.setCoordinate(location)
     }
     
 }
