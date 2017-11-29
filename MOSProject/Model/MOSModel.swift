@@ -57,7 +57,15 @@ public class MOSModel: NSObject {
     var logChangedBlock: MOSModelLogChangedBlock? = nil
     
     public func addLog(newLogEntry: String) {
-        self.logs!.append(["timestamp": Date()])
+        
+        let currentTime = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
+        dateFormatter.defaultDate = currentTime
+        let current = dateFormatter.string(from: currentTime)
+
+        self.logs!.append(["timestamp": current])
         self.logs!.append(["log": newLogEntry])
         
         if self.logChangedBlock != nil  {

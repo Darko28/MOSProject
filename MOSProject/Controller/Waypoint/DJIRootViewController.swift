@@ -31,6 +31,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     var uploadBtn: UIButton!
     
     var mapView: MAMapView!
+    var amapSearch: AMapSearchAPI?
     
     var mapController: DJIMapController?
     var tapGesture: UITapGestureRecognizer?
@@ -251,6 +252,8 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         
         self.sentCmds = NSMutableDictionary()
 
+        amapSearch = AMapSearchAPI()
+        amapSearch?.language = AMapSearchLanguage.en
     }
     
     func appRegisteredWithError(_ error: Error?) {
@@ -909,29 +912,29 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                     self.appDelegate?.model?.addLog(newLogEntry: "Sent CmdID \(cmdId)")
                     self.aircraftAnnoView?.calloutView?.setTitle(title: "Command sent!")
                 }, and: { [weak self] (data, error) in
-//                    let ackData: NSData = data.subdata(with: NSMakeRange(2, data.length - 2)) as NSData
-//                    print("ackData: \(ackData)")
-//                    self?.appDelegate?.model?.addLog(newLogEntry: "ackData: \(ackData.bytes)")
-//                    self?.appDelegate?.model?.addLog(newLogEntry: "ackData: \(ackData.length)")
-//
-////                    let rawData = "<a0b55a00 000088d7 bfb63bf0 010080d7 bfb60202 520000ca 04000200 0a01032f 00000000 00000000 5804d0f4 7f0000e0 41010000 600000f3 02000000 0000b080 6e020100 60000050 a236e0fe 7f000052 7a8f0f01 00000000>"
-//
-//                    var ackValue: UInt16 = 7
-//                    ackData.getBytes(&ackValue, length: UInt16.bitWidth)
-//                    print("\(UInt16.bitWidth)")
-//                    self?.appDelegate?.model?.addLog(newLogEntry: "\(UInt16.bitWidth)")
+                    //                    let ackData: NSData = data.subdata(with: NSMakeRange(2, data.length - 2)) as NSData
+                    //                    print("ackData: \(ackData)")
+                    //                    self?.appDelegate?.model?.addLog(newLogEntry: "ackData: \(ackData.bytes)")
+                    //                    self?.appDelegate?.model?.addLog(newLogEntry: "ackData: \(ackData.length)")
+                    //
+                    ////                    let rawData = "<a0b55a00 000088d7 bfb63bf0 010080d7 bfb60202 520000ca 04000200 0a01032f 00000000 00000000 5804d0f4 7f0000e0 41010000 600000f3 02000000 0000b080 6e020100 60000050 a236e0fe 7f000052 7a8f0f01 00000000>"
+                    //
+                    //                    var ackValue: UInt16 = 7
+                    //                    ackData.getBytes(&ackValue, length: UInt16.bitWidth)
+                    //                    print("\(UInt16.bitWidth)")
+                    //                    self?.appDelegate?.model?.addLog(newLogEntry: "\(UInt16.bitWidth)")
                     
-//                    let responseMessage = String.init(data: data as Data, encoding: String.Encoding.utf8)
-//                    let responseMessage = "Ack: \(ackValue)"
+                    //                    let responseMessage = String.init(data: data as Data, encoding: String.Encoding.utf8)
+                    //                    let responseMessage = "Ack: \(ackValue)"
                     let responseMessage = String.init(data: data as Data, encoding: String.Encoding.utf8)
-//                    var displayMessage: String?
-//                    displayMessage = (responseMessage?.contains("pm2.5"))! ? responseMessage?.replacingOccurrences(of: "pm2.5", with: "") : responseMessage
-
-//                    displayMessage = displayMessage?.replacingOccurrences(of: CharacterSet.whitespaces, with: "sensor")
-//                    let responseMessage = "\(data)"
-//                    self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage)] for CmdID \(cmdId)")
+                    //                    var displayMessage: String?
+                    //                    displayMessage = (responseMessage?.contains("pm2.5"))! ? responseMessage?.replacingOccurrences(of: "pm2.5", with: "") : responseMessage
+                    
+                    //                    displayMessage = displayMessage?.replacingOccurrences(of: CharacterSet.whitespaces, with: "sensor")
+                    //                    let responseMessage = "\(data)"
+                    //                    self!.appDelegate?.model?.addLog(newLogEntry: "Received ACK [\(responseMessage)] for CmdID \(cmdId)")
                     self!.appDelegate?.model?.addLog(newLogEntry: "Received DATA [\(responseMessage ?? "did select response nil")] for CmdID \(cmdId)")
-
+                    
                     let currentTime: Date = Date()
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -939,12 +942,19 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                     dateFormatter.timeZone = TimeZone.current
                     print("current date time: \(dateFormatter.string(from: currentTime))")
                     
-//                    let timeInterval: TimeInterval = currentTime.timeIntervalSince1970
-//                    let timeStamp = Int(timeInterval)
-//                    print("current time stamp: \(timeStamp)")
-                    
-                    self?.aircraftAnnoView.calloutView?.setSubTitle(subTitle: responseMessage ?? "did response nil")
+                    //                    let timeInterval: TimeInterval = currentTime.timeIntervalSince1970
+                    //                    let timeStamp = Int(timeInterval)
+                    //                    print("current time stamp: \(timeStamp)")
+                    if (responseMessage?.contains(","))! {
+                        let tmpStr = responseMessage!.components(separatedBy: ", ")
+                        let pm25Data = (tmpStr.first! as NSString).doubleValue
+                        let pm10Data = (tmpStr.last! as NSString).doubleValue
+                        self?.aircraftAnnoView.calloutView?.setSubTitle(subTitle: "\(pm25Data)mg/m3, \(pm10Data)mg/m3")
+                    }
+
+//                    self?.aircraftAnnoView.calloutView?.setSubTitle(subTitle: responseMessage ?? "did response nil")
                     self!.aircraftAnnoView?.calloutView?.setTitle(title: dateFormatter.string(from: currentTime))
+                    self?.saveSensorData(date: dateFormatter.string(from: currentTime), pmData: responseMessage ?? " ")
                 })
             }
  
@@ -1017,10 +1027,19 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 dateFormatter.locale = Locale.current
                 dateFormatter.timeZone = TimeZone.current
+                
                 print("current date time: \(dateFormatter.string(from: currentTime))")
                 
-                self?.aircraftAnnoView.calloutView?.setSubTitle(subTitle: responseMessage ?? "did response nil")
+                if (responseMessage?.contains(","))! {
+                    let tmpStr = responseMessage!.components(separatedBy: ", ")
+                    let pm25Data = (tmpStr.first! as NSString).doubleValue
+                    let pm10Data = (tmpStr.last! as NSString).doubleValue
+                    self?.aircraftAnnoView.calloutView?.setSubTitle(subTitle: "\(pm25Data)mg/m3, \(pm10Data)mg/m3")
+                }
+                
                 self!.aircraftAnnoView?.calloutView?.setTitle(title: dateFormatter.string(from: currentTime))
+                
+                self?.saveSensorData(date: dateFormatter.string(from: currentTime), pmData: responseMessage ?? " ")
             })
             //            self.aircraftAnnoView.setSelected(true, animated: false)
         }
@@ -1131,8 +1150,6 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     
     
     
-    
-    
 //    var appDelegate: AppDelegate? = nil
     var connectedProduct: DJIBaseProduct? = nil
     var sentCmds: NSMutableDictionary?
@@ -1218,6 +1235,31 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         }
         
         self.sentCmds?.removeObject(forKey: key)
+    }
+    
+    func saveSensorData(date: String, pmData: String) {
+        let sensor = Sensor()
+        
+//        let formatter = DateFormatter()
+//        formatter.locale = Locale.current
+//        formatter.timeZone = TimeZone.current
+//        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+//        sensor.time = formatter.date(from: date)!
+        sensor.time = date
+        
+        if pmData.contains(",") {
+            let tmpStr = pmData.components(separatedBy: ", ")
+            let pm25Data = (tmpStr.first! as NSString).doubleValue
+            let pm10Data = (tmpStr.last! as NSString).doubleValue
+            sensor.pm25Data = pm25Data
+            sensor.pm10Data = pm10Data
+            let dao = SensorDAO.sharedInstance
+            dao.create(sensor)
+            
+            let resList = dao.findAll()
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadViewNotification"), object: resList, userInfo: nil)
+        }
     }
     
     

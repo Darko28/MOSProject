@@ -10,9 +10,10 @@
 		A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */; };
 		A22A2DF31FA6C15900007A9F /* CustomWaypointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */; };
 		A22DC4091FA6B742001B6CC7 /* CustomWaypointCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */; };
+		A237682D1FCE8B070096B707 /* SensorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A237682B1FCE8B070096B707 /* SensorTableViewCell.swift */; };
+		A237682E1FCE8B070096B707 /* SensorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A237682C1FCE8B070096B707 /* SensorTableViewCell.xib */; };
 		A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAA61F979ED4006B2EDD /* AppDelegate.swift */; };
 		A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A266DAAA1F979ED4006B2EDD /* Main.storyboard */; };
-		A266DAAF1F979ED4006B2EDD /* MOSProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */; };
 		A266DAB11F979ED4006B2EDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A266DAB01F979ED4006B2EDD /* Assets.xcassets */; };
 		A266DAB41F979ED4006B2EDD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A266DAB21F979ED4006B2EDD /* LaunchScreen.storyboard */; };
 		A266DABF1F979ED4006B2EDD /* MOSProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DABE1F979ED4006B2EDD /* MOSProjectTests.swift */; };
@@ -39,6 +40,12 @@
 		A29CBBB61F9F2C390008D99B /* DJIWaypointConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A29CBBB41F9F2C390008D99B /* DJIWaypointConfigViewController.xib */; };
 		A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EC1F98AF0E00A6B0D8 /* config.json */; };
 		A2A112F01F9B3D3F00A6B0D8 /* AdvancedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */; };
+		A2A651171FCE64D80022DFEA /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A651161FCE64D80022DFEA /* Sensor.swift */; };
+		A2C69FED1FCE66D4002F459C /* SensorCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FEB1FCE66D4002F459C /* SensorCoreData.xcdatamodeld */; };
+		A2C69FF31FCE6A91002F459C /* CoreDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF21FCE6A91002F459C /* CoreDataDAO.swift */; };
+		A2C69FF51FCE6BBB002F459C /* SensorDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF41FCE6BBB002F459C /* SensorDAO.swift */; };
+		A2C69FF81FCE714A002F459C /* SensorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF71FCE714A002F459C /* SensorTableViewController.swift */; };
+		A2C69FFA1FCE71E3002F459C /* SensorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF91FCE71E3002F459C /* SensorDetailViewController.swift */; };
 		A2FA14F51FC55E00004A7738 /* WGS84-GCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */; };
 		A2FA14F91FC581C0004A7738 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14F81FC581C0004A7738 /* Utility.swift */; };
 		A2FA14FC1FC59362004A7738 /* GCJ02-WGS84.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14FB1FC59362004A7738 /* GCJ02-WGS84.swift */; };
@@ -67,10 +74,11 @@
 		A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingAnnotationViewController.swift; sourceTree = "<group>"; };
 		A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaypointAnnotationView.swift; sourceTree = "<group>"; };
 		A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaypointCalloutView.swift; sourceTree = "<group>"; };
+		A237682B1FCE8B070096B707 /* SensorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTableViewCell.swift; sourceTree = "<group>"; };
+		A237682C1FCE8B070096B707 /* SensorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorTableViewCell.xib; sourceTree = "<group>"; };
 		A266DAA31F979ED4006B2EDD /* MOSProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOSProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A266DAA61F979ED4006B2EDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A266DAAB1F979ED4006B2EDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A266DAAE1F979ED4006B2EDD /* MOSProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MOSProject.xcdatamodel; sourceTree = "<group>"; };
 		A266DAB01F979ED4006B2EDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A266DAB31F979ED4006B2EDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A266DAB51F979ED4006B2EDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,6 +111,12 @@
 		A29CBBB41F9F2C390008D99B /* DJIWaypointConfigViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DJIWaypointConfigViewController.xib; sourceTree = "<group>"; };
 		A2A112EC1F98AF0E00A6B0D8 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedViewController.xib; sourceTree = "<group>"; };
+		A2A651161FCE64D80022DFEA /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		A2C69FEC1FCE66D4002F459C /* SensorCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorCoreData.xcdatamodel; sourceTree = "<group>"; };
+		A2C69FF21FCE6A91002F459C /* CoreDataDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDAO.swift; sourceTree = "<group>"; };
+		A2C69FF41FCE6BBB002F459C /* SensorDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDAO.swift; sourceTree = "<group>"; };
+		A2C69FF71FCE714A002F459C /* SensorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTableViewController.swift; sourceTree = "<group>"; };
+		A2C69FF91FCE71E3002F459C /* SensorDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetailViewController.swift; sourceTree = "<group>"; };
 		A2FA14F31FC55E00004A7738 /* WGS84-GCJ02.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WGS84-GCJ02.h"; sourceTree = "<group>"; };
 		A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WGS84-GCJ02.m"; sourceTree = "<group>"; };
 		A2FA14F81FC581C0004A7738 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
@@ -181,6 +195,7 @@
 			children = (
 				A2A112EC1F98AF0E00A6B0D8 /* config.json */,
 				A266DAAA1F979ED4006B2EDD /* Main.storyboard */,
+				A2A6510E1FCE641E0022DFEA /* Persistence Model */,
 				A266DAD71F97A09D006B2EDD /* Model */,
 				A266DADC1F97A10D006B2EDD /* Controller */,
 				A266DADA1F97A0BC006B2EDD /* Presentation */,
@@ -212,10 +227,10 @@
 			isa = PBXGroup;
 			children = (
 				A266DAE21F986EB8006B2EDD /* Network */,
-				A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */,
 				A266DAD81F97A0AC006B2EDD /* MOSAction.swift */,
 				A266DADD1F97A56B006B2EDD /* MOSSection.swift */,
 				A266DADF1F97AC71006B2EDD /* MOSModel.swift */,
+				A2A651161FCE64D80022DFEA /* Sensor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -231,12 +246,12 @@
 			isa = PBXGroup;
 			children = (
 				A2FA14FB1FC59362004A7738 /* GCJ02-WGS84.swift */,
+				A2FA14F81FC581C0004A7738 /* Utility.swift */,
 				A2FA14F31FC55E00004A7738 /* WGS84-GCJ02.h */,
 				A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */,
 				A266DAA61F979ED4006B2EDD /* AppDelegate.swift */,
 				A266DAB01F979ED4006B2EDD /* Assets.xcassets */,
 				A266DAB21F979ED4006B2EDD /* LaunchScreen.storyboard */,
-				A2FA14F81FC581C0004A7738 /* Utility.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -246,6 +261,7 @@
 			children = (
 				A290B8751F9DB4E10015D339 /* MOS */,
 				A290B8761F9DB4F90015D339 /* Waypoint */,
+				A2C69FF61FCE7100002F459C /* Sensor */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -291,6 +307,27 @@
 				A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */,
 			);
 			path = Waypoint;
+			sourceTree = "<group>";
+		};
+		A2A6510E1FCE641E0022DFEA /* Persistence Model */ = {
+			isa = PBXGroup;
+			children = (
+				A2C69FEB1FCE66D4002F459C /* SensorCoreData.xcdatamodeld */,
+				A2C69FF21FCE6A91002F459C /* CoreDataDAO.swift */,
+				A2C69FF41FCE6BBB002F459C /* SensorDAO.swift */,
+			);
+			path = "Persistence Model";
+			sourceTree = "<group>";
+		};
+		A2C69FF61FCE7100002F459C /* Sensor */ = {
+			isa = PBXGroup;
+			children = (
+				A2C69FF71FCE714A002F459C /* SensorTableViewController.swift */,
+				A2C69FF91FCE71E3002F459C /* SensorDetailViewController.swift */,
+				A237682B1FCE8B070096B707 /* SensorTableViewCell.swift */,
+				A237682C1FCE8B070096B707 /* SensorTableViewCell.xib */,
+			);
+			path = Sensor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,6 +445,7 @@
 				A29CBBB61F9F2C390008D99B /* DJIWaypointConfigViewController.xib in Resources */,
 				A266DAB11F979ED4006B2EDD /* Assets.xcassets in Resources */,
 				A266DAF11F9882C9006B2EDD /* MOSLogConsoleViewController.xib in Resources */,
+				A237682E1FCE8B070096B707 /* SensorTableViewCell.xib in Resources */,
 				A2A112F01F9B3D3F00A6B0D8 /* AdvancedViewController.xib in Resources */,
 				A290B8831F9DC2610015D339 /* DJIRootViewController.xib in Resources */,
 				A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */,
@@ -499,21 +537,27 @@
 				A266DAED1F9881BC006B2EDD /* MOSJSONDynamicController.swift in Sources */,
 				A2FA14F51FC55E00004A7738 /* WGS84-GCJ02.m in Sources */,
 				A290B87A1F9DB77F0015D339 /* DJIAircraftAnnotationView.swift in Sources */,
+				A2C69FF31FCE6A91002F459C /* CoreDataDAO.swift in Sources */,
 				A266DAE41F986ECD006B2EDD /* MOSProductCommunicationManager.swift in Sources */,
-				A266DAAF1F979ED4006B2EDD /* MOSProject.xcdatamodeld in Sources */,
 				A290B87F1F9DBA0E0015D339 /* DJIMapController.swift in Sources */,
 				A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */,
 				A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */,
 				A290B8861F9DC5A50015D339 /* DJIGSButtonController.swift in Sources */,
+				A2C69FED1FCE66D4002F459C /* SensorCoreData.xcdatamodeld in Sources */,
 				A266DAEB1F988026006B2EDD /* MOSMainTabViewController.swift in Sources */,
 				A2FA14FC1FC59362004A7738 /* GCJ02-WGS84.swift in Sources */,
+				A2C69FF51FCE6BBB002F459C /* SensorDAO.swift in Sources */,
 				A29CBBB51F9F2C390008D99B /* DJIWaypointConfigViewController.swift in Sources */,
 				A22DC4091FA6B742001B6CC7 /* CustomWaypointCalloutView.swift in Sources */,
 				A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */,
+				A2A651171FCE64D80022DFEA /* Sensor.swift in Sources */,
 				A266DAF01F9882C9006B2EDD /* MOSLogConsoleViewController.swift in Sources */,
+				A237682D1FCE8B070096B707 /* SensorTableViewCell.swift in Sources */,
+				A2C69FF81FCE714A002F459C /* SensorTableViewController.swift in Sources */,
 				A2FA14F91FC581C0004A7738 /* Utility.swift in Sources */,
 				A22A2DF31FA6C15900007A9F /* CustomWaypointAnnotationView.swift in Sources */,
 				A266DADE1F97A56B006B2EDD /* MOSSection.swift in Sources */,
+				A2C69FFA1FCE71E3002F459C /* SensorDetailViewController.swift in Sources */,
 				A290B8781F9DB66F0015D339 /* DJIAircraftAnnotation.swift in Sources */,
 				A266DAD91F97A0AC006B2EDD /* MOSAction.swift in Sources */,
 				A290B8811F9DBBFD0015D339 /* DJIRootViewController.swift in Sources */,
@@ -829,13 +873,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A266DAAD1F979ED4006B2EDD /* MOSProject.xcdatamodeld */ = {
+		A2C69FEB1FCE66D4002F459C /* SensorCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A266DAAE1F979ED4006B2EDD /* MOSProject.xcdatamodel */,
+				A2C69FEC1FCE66D4002F459C /* SensorCoreData.xcdatamodel */,
 			);
-			currentVersion = A266DAAE1F979ED4006B2EDD /* MOSProject.xcdatamodel */;
-			path = MOSProject.xcdatamodeld;
+			currentVersion = A2C69FEC1FCE66D4002F459C /* SensorCoreData.xcdatamodel */;
+			path = SensorCoreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

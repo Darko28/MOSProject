@@ -22,32 +22,32 @@ class MOSMainTabViewController: UITabBarController {
         self.appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         let viewControllers = NSMutableArray()
-        var selectedViewController: MOSJSONDynamicController? = nil
-        var allSections = self.appDelegate!.model!.jsonSections
+//        var selectedViewController: MOSJSONDynamicController? = nil
+        let allSections = self.appDelegate!.model!.jsonSections
         
-        // add two table view tab
-        for index in 0..<allSections!.count {
-            let section = allSections![index]
-            let newController: MOSJSONDynamicController = MOSJSONDynamicController(style: .plain)
-            newController.section = section
-            
-            if selectedViewController == nil {
-                selectedViewController = newController
-            }
-            
-            newController.tabBarItem = UITabBarItem(title: section.name, image: UIImage(named: "first"), tag: index)
-            newController.title = section.name
-            
-            viewControllers.add(newController)
-        }
-
+//        // add two table view tab
+//        for index in 0..<allSections!.count {
+//            let section = allSections![index]
+//            let newController: MOSJSONDynamicController = MOSJSONDynamicController(style: .plain)
+//            newController.section = section
+//
+//            if selectedViewController == nil {
+//                selectedViewController = newController
+//            }
+//
+//            newController.tabBarItem = UITabBarItem(title: section.name, image: UIImage(named: "first"), tag: index)
+//            newController.title = section.name
+//
+//            viewControllers.add(newController)
+//        }
+//
         let index = allSections!.count - 1
-        
-        // Add the advanced view
-        let lsAdv = AdvancedViewController(nibName: "AdvancedViewController", bundle: Bundle.main)
-        lsAdv.tabBarItem = UITabBarItem(title: "Advanced", image: UIImage(named: "second"), tag: index + 1)
-        lsAdv.title = "Advanced"
-        viewControllers.add(lsAdv)
+//
+//        // Add the advanced view
+//        let lsAdv = AdvancedViewController(nibName: "AdvancedViewController", bundle: Bundle.main)
+//        lsAdv.tabBarItem = UITabBarItem(title: "Advanced", image: UIImage(named: "second"), tag: index + 1)
+//        lsAdv.title = "Advanced"
+//        viewControllers.add(lsAdv)
         
         // Add the log view
         let logVC = MOSLogConsoleViewController(nibName: "MOSLogConsoleViewController", bundle: Bundle.main)
@@ -61,9 +61,15 @@ class MOSMainTabViewController: UITabBarController {
 //        waypointVC.navigationController?.navigationBar.isHidden = true
         viewControllers.add(waypointVC)
         
+//        let sensorTableVC = SensorTableViewController(nibName: "SensorTableViewController", bundle: Bundle.main)
+        let sensorTableVC: SensorTableViewController = SensorTableViewController(style: .plain)
+        sensorTableVC.tabBarItem = UITabBarItem(title: "SensorData", image: UIImage(named: "four"), tag: index + 1)
+        sensorTableVC.title = "Sensors"
+        viewControllers.add(sensorTableVC)
+        
         self.appDelegate?.model?.addLog(newLogEntry: "Created UI")
         self.setViewControllers(viewControllers as? [UIViewController], animated: true)
-        self.selectedViewController = viewControllers.lastObject as? UIViewController
+        self.selectedViewController = viewControllers[1] as? UIViewController
         
     }    
 

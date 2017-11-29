@@ -54,16 +54,22 @@ class MOSLogConsoleViewController: UIViewController {
         var fullLog = ""
         let logs: Array<Dictionary<String, Any>> = (self.appDelegate!.model!.logs)! as Array<Dictionary<String, Any>>
         for logEntry in logs.enumerated() {
-            var timeStamp: Date = Date()
+            let currentTime: Date = Date()
+            var timeStamp: String = ""
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            timeStamp = dateFormatter.string(from: currentTime)
+            
             var log: String = ""
             
             if logEntry.offset % 2 == 0 {
-                timeStamp = logEntry.element["timestamp"] as! Date
+                timeStamp = logEntry.element["timestamp"] as! String
             } else {
                 log = logEntry.element["log"] as! String
            }
             if logEntry.offset % 2 == 1 {
-                fullLog = "\(fullLog) + \(timeStamp) +\(log)\n"
+                fullLog = "\(fullLog)" + "\(timeStamp)" + "    " + "\(log)\n"
             }
         }
         DispatchQueue.main.async {
