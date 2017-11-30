@@ -28,7 +28,6 @@ public class SensorDAO: CoreDataDAO {
         sensor.pm25Data = model.pm25Data
         sensor.pm10Data = model.pm10Data
         
-        print("model: \(model.time)")
         self.saveContext()
     }
     
@@ -76,8 +75,6 @@ public class SensorDAO: CoreDataDAO {
                     let tmp = item as! SensorManagedObject
                     let sensor = Sensor(time: tmp.time!, pm25Data: tmp.pm25Data, pm10Data: tmp.pm10Data)
                     resListData.add(sensor)
-                    print("model time: \(tmp.time!.description)")
-                    print("modelT: \(tmp.time!)")
                 }
             }
         } catch {

@@ -11,9 +11,13 @@ import UIKit
 class SensorTableViewController: UITableViewController {
     
     
-    var sensorDetailViewController: SensorDetailViewController?
+    var sensorLineChartVC: SensorLineChartViewController = SensorLineChartViewController()
     
     var listData = NSMutableArray()
+    
+    var timeData: [String] = []
+    var chart25Data: [Double] = []
+    var chart10Data: [Double] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,17 +29,32 @@ class SensorTableViewController: UITableViewController {
         
         self.tableView.register(UINib(nibName: "SensorTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "sensor")
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.sensorDetailViewController = (controllers[controllers.count-1] as! SensorDetailViewController)
-        }
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+
+        let chartBarBtn: UIBarButtonItem = UIBarButtonItem.init(title: "chart", style: UIBarButtonItemStyle.plain, target: self, action: #selector(showChart))
+        self.parent?.navigationItem.rightBarButtonItem = chartBarBtn
+//        self.navigationItem.rightBarButtonItem = chartBarBtn
         
         let dao = SensorDAO.sharedInstance
         self.listData = dao.findAll()
         
+//        self.chartData = (self.listData as! [SensorManagedObject]).pm25Data
+        for pmData in self.listData {
+            let tmp = pmData as! Sensor
+            self.chart25Data.append(tmp.pm25Data)
+            self.chart10Data.append(tmp.pm10Data)
+            self.timeData.append(tmp.time)
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadView(_:)), name: Notification.Name(rawValue: "reloadViewNotification"), object: nil)
+    }
+    
+    @objc func showChart() {
+        self.present(sensorLineChartVC, animated: true) {
+            self.sensorLineChartVC.pm25numbers = self.chart25Data
+            self.sensorLineChartVC.pm10numbers = self.chart10Data
+            self.sensorLineChartVC.date = self.timeData
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,13 +69,11 @@ class SensorTableViewController: UITableViewController {
 
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        if segue.identifier == "showDetail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow {
-////                let sensor = self.listData[indexPath.row] as! SensorDAO
-//                let controller = (segue.destination as! UINavigationController).topViewController as! SensorDetailViewController
-////                controller.detailItem = sensor
-//                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
+//            //                let sensor = self.listData[indexPath.row] as! SensorDAO
+//            let controller = (segue.destination as! UINavigationController).topViewController as! SensorLineChartViewController
+//            controller.numbers = listData as! [Double]
+//            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+//            controller.navigationItem.leftItemsSupplementBackButton = true
 //        }
 //    }
     

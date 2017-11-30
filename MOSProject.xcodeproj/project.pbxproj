@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		075E51D98865DB4318CB1FE6 /* Pods_MOSProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEC0E0AF9866C83E3181E324 /* Pods_MOSProject.framework */; };
 		A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */; };
 		A22A2DF31FA6C15900007A9F /* CustomWaypointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */; };
 		A22DC4091FA6B742001B6CC7 /* CustomWaypointCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */; };
@@ -41,6 +42,8 @@
 		A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EC1F98AF0E00A6B0D8 /* config.json */; };
 		A2A112F01F9B3D3F00A6B0D8 /* AdvancedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */; };
 		A2A651171FCE64D80022DFEA /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A651161FCE64D80022DFEA /* Sensor.swift */; };
+		A2B8AE921FCEE915000129B1 /* SensorLineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B8AE901FCEE915000129B1 /* SensorLineChartViewController.swift */; };
+		A2B8AE931FCEE915000129B1 /* SensorLineChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2B8AE911FCEE915000129B1 /* SensorLineChartViewController.xib */; };
 		A2C69FED1FCE66D4002F459C /* SensorCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FEB1FCE66D4002F459C /* SensorCoreData.xcdatamodeld */; };
 		A2C69FF31FCE6A91002F459C /* CoreDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF21FCE6A91002F459C /* CoreDataDAO.swift */; };
 		A2C69FF51FCE6BBB002F459C /* SensorDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF41FCE6BBB002F459C /* SensorDAO.swift */; };
@@ -49,7 +52,6 @@
 		A2FA14F51FC55E00004A7738 /* WGS84-GCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */; };
 		A2FA14F91FC581C0004A7738 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14F81FC581C0004A7738 /* Utility.swift */; };
 		A2FA14FC1FC59362004A7738 /* GCJ02-WGS84.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14FB1FC59362004A7738 /* GCJ02-WGS84.swift */; };
-		A36503BBE977568B104C35FE /* libPods-MOSProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,8 @@
 		A2A112EC1F98AF0E00A6B0D8 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		A2A112EF1F9B3D3F00A6B0D8 /* AdvancedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedViewController.xib; sourceTree = "<group>"; };
 		A2A651161FCE64D80022DFEA /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		A2B8AE901FCEE915000129B1 /* SensorLineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLineChartViewController.swift; sourceTree = "<group>"; };
+		A2B8AE911FCEE915000129B1 /* SensorLineChartViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorLineChartViewController.xib; sourceTree = "<group>"; };
 		A2C69FEC1FCE66D4002F459C /* SensorCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorCoreData.xcdatamodel; sourceTree = "<group>"; };
 		A2C69FF21FCE6A91002F459C /* CoreDataDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDAO.swift; sourceTree = "<group>"; };
 		A2C69FF41FCE6BBB002F459C /* SensorDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDAO.swift; sourceTree = "<group>"; };
@@ -121,7 +125,7 @@
 		A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WGS84-GCJ02.m"; sourceTree = "<group>"; };
 		A2FA14F81FC581C0004A7738 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		A2FA14FB1FC59362004A7738 /* GCJ02-WGS84.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCJ02-WGS84.swift"; sourceTree = "<group>"; };
-		AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MOSProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEC0E0AF9866C83E3181E324 /* Pods_MOSProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOSProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0504097D0329A50011ACB39 /* Pods-MOSProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,7 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A36503BBE977568B104C35FE /* libPods-MOSProject.a in Frameworks */,
+				075E51D98865DB4318CB1FE6 /* Pods_MOSProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +158,7 @@
 		5A460A77E4C51791C4202104 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AFF5BBDFA7012176F8BF6346 /* libPods-MOSProject.a */,
+				AEC0E0AF9866C83E3181E324 /* Pods_MOSProject.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -326,6 +330,8 @@
 				A2C69FF91FCE71E3002F459C /* SensorDetailViewController.swift */,
 				A237682B1FCE8B070096B707 /* SensorTableViewCell.swift */,
 				A237682C1FCE8B070096B707 /* SensorTableViewCell.xib */,
+				A2B8AE901FCEE915000129B1 /* SensorLineChartViewController.swift */,
+				A2B8AE911FCEE915000129B1 /* SensorLineChartViewController.xib */,
 			);
 			path = Sensor;
 			sourceTree = "<group>";
@@ -452,6 +458,7 @@
 				A266DAE91F987D2F006B2EDD /* MOSDynamicTableViewCell.xib in Resources */,
 				A290B8871F9DC5A50015D339 /* DJIGSButtonController.xib in Resources */,
 				A2A112ED1F98AF0E00A6B0D8 /* config.json in Resources */,
+				A2B8AE931FCEE915000129B1 /* SensorLineChartViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,10 +505,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${PODS_ROOT}/DJI-SDK-iOS/iOS_Mobile_SDK/DJISDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DJISDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,6 +552,7 @@
 				A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */,
 				A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */,
 				A290B8861F9DC5A50015D339 /* DJIGSButtonController.swift in Sources */,
+				A2B8AE921FCEE915000129B1 /* SensorLineChartViewController.swift in Sources */,
 				A2C69FED1FCE66D4002F459C /* SensorCoreData.xcdatamodeld in Sources */,
 				A266DAEB1F988026006B2EDD /* MOSMainTabViewController.swift in Sources */,
 				A2FA14FC1FC59362004A7738 /* GCJ02-WGS84.swift in Sources */,
