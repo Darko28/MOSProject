@@ -50,11 +50,15 @@ class SensorTableViewController: UITableViewController {
     }
     
     @objc func showChart() {
-        self.present(sensorLineChartVC, animated: true) {
-            self.sensorLineChartVC.pm25numbers = self.chart25Data
-            self.sensorLineChartVC.pm10numbers = self.chart10Data
-            self.sensorLineChartVC.date = self.timeData
-        }
+        self.sensorLineChartVC.pm25numbers = self.chart25Data
+        self.sensorLineChartVC.pm10numbers = self.chart10Data
+        self.sensorLineChartVC.date = self.timeData
+        self.present(sensorLineChartVC, animated: true, completion: nil)
+//        self.present(sensorLineChartVC, animated: true) {
+//            self.sensorLineChartVC.pm25numbers = self.chart25Data
+//            self.sensorLineChartVC.pm10numbers = self.chart10Data
+//            self.sensorLineChartVC.date = self.timeData
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

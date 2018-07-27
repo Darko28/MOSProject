@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		075E51D98865DB4318CB1FE6 /* Pods_MOSProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEC0E0AF9866C83E3181E324 /* Pods_MOSProject.framework */; };
+		A2085B331FD7CDF400CE5CAB /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2085B321FD7CDE700CE5CAB /* VideoPreviewer.framework */; };
+		A2085B341FD7CDF400CE5CAB /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A2085B321FD7CDE700CE5CAB /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A21108401FA0531900C21EFB /* MovingAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */; };
 		A22A2DF31FA6C15900007A9F /* CustomWaypointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */; };
 		A22DC4091FA6B742001B6CC7 /* CustomWaypointCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */; };
 		A237682D1FCE8B070096B707 /* SensorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A237682B1FCE8B070096B707 /* SensorTableViewCell.swift */; };
 		A237682E1FCE8B070096B707 /* SensorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A237682C1FCE8B070096B707 /* SensorTableViewCell.xib */; };
+		A249BF3B1FD7D9D6006EAE96 /* DefaultLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A249BF3A1FD7D9D6006EAE96 /* DefaultLayoutViewController.swift */; };
+		A249BF4A1FD9405E006EAE96 /* WaypointPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A249BF491FD9405E006EAE96 /* WaypointPresentationViewController.swift */; };
 		A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266DAA61F979ED4006B2EDD /* AppDelegate.swift */; };
 		A266DAAC1F979ED4006B2EDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A266DAAA1F979ED4006B2EDD /* Main.storyboard */; };
 		A266DAB11F979ED4006B2EDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A266DAB01F979ED4006B2EDD /* Assets.xcassets */; };
@@ -50,11 +54,24 @@
 		A2C69FF81FCE714A002F459C /* SensorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF71FCE714A002F459C /* SensorTableViewController.swift */; };
 		A2C69FFA1FCE71E3002F459C /* SensorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C69FF91FCE71E3002F459C /* SensorDetailViewController.swift */; };
 		A2FA14F51FC55E00004A7738 /* WGS84-GCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */; };
-		A2FA14F91FC581C0004A7738 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14F81FC581C0004A7738 /* Utility.swift */; };
 		A2FA14FC1FC59362004A7738 /* GCJ02-WGS84.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA14FB1FC59362004A7738 /* GCJ02-WGS84.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A2085B311FD7CDE700CE5CAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2085B2D1FD7CDE700CE5CAB /* VideoPreviewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 02A543FD1C3C51CB0083C11B;
+			remoteInfo = VideoPreviewer;
+		};
+		A2085B351FD7CDF400CE5CAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2085B2D1FD7CDE700CE5CAB /* VideoPreviewer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 02A543FC1C3C51CB0083C11B;
+			remoteInfo = VideoPreviewer;
+		};
 		A266DABB1F979ED4006B2EDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A266DA9B1F979ED4006B2EDD /* Project object */;
@@ -71,13 +88,30 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A2085B371FD7CDF400CE5CAB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A2085B341FD7CDF400CE5CAB /* VideoPreviewer.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.release.xcconfig"; sourceTree = "<group>"; };
+		A2085B2D1FD7CDE700CE5CAB /* VideoPreviewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoPreviewer.xcodeproj; path = ../VideoPreviewer/VideoPreviewer.xcodeproj; sourceTree = "<group>"; };
 		A211083F1FA0531900C21EFB /* MovingAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingAnnotationViewController.swift; sourceTree = "<group>"; };
 		A22A2DF21FA6C15900007A9F /* CustomWaypointAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaypointAnnotationView.swift; sourceTree = "<group>"; };
 		A22DC4081FA6B742001B6CC7 /* CustomWaypointCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaypointCalloutView.swift; sourceTree = "<group>"; };
 		A237682B1FCE8B070096B707 /* SensorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTableViewCell.swift; sourceTree = "<group>"; };
 		A237682C1FCE8B070096B707 /* SensorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorTableViewCell.xib; sourceTree = "<group>"; };
+		A249BF3A1FD7D9D6006EAE96 /* DefaultLayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLayoutViewController.swift; sourceTree = "<group>"; };
+		A249BF491FD9405E006EAE96 /* WaypointPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaypointPresentationViewController.swift; sourceTree = "<group>"; };
 		A266DAA31F979ED4006B2EDD /* MOSProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOSProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A266DAA61F979ED4006B2EDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A266DAAB1F979ED4006B2EDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,7 +157,6 @@
 		A2C69FF91FCE71E3002F459C /* SensorDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetailViewController.swift; sourceTree = "<group>"; };
 		A2FA14F31FC55E00004A7738 /* WGS84-GCJ02.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WGS84-GCJ02.h"; sourceTree = "<group>"; };
 		A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WGS84-GCJ02.m"; sourceTree = "<group>"; };
-		A2FA14F81FC581C0004A7738 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		A2FA14FB1FC59362004A7738 /* GCJ02-WGS84.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCJ02-WGS84.swift"; sourceTree = "<group>"; };
 		AEC0E0AF9866C83E3181E324 /* Pods_MOSProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOSProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0504097D0329A50011ACB39 /* Pods-MOSProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOSProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2085B331FD7CDF400CE5CAB /* VideoPreviewer.framework in Frameworks */,
 				075E51D98865DB4318CB1FE6 /* Pods_MOSProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +192,7 @@
 		5A460A77E4C51791C4202104 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A2085B2D1FD7CDE700CE5CAB /* VideoPreviewer.xcodeproj */,
 				AEC0E0AF9866C83E3181E324 /* Pods_MOSProject.framework */,
 			);
 			name = Frameworks;
@@ -170,6 +205,14 @@
 				348FE6671CFC52AE24C67600 /* Pods-MOSProject.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A2085B2E1FD7CDE700CE5CAB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2085B321FD7CDE700CE5CAB /* VideoPreviewer.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		A266DA9A1F979ED4006B2EDD = {
@@ -250,7 +293,6 @@
 			isa = PBXGroup;
 			children = (
 				A2FA14FB1FC59362004A7738 /* GCJ02-WGS84.swift */,
-				A2FA14F81FC581C0004A7738 /* Utility.swift */,
 				A2FA14F31FC55E00004A7738 /* WGS84-GCJ02.h */,
 				A2FA14F41FC55E00004A7738 /* WGS84-GCJ02.m */,
 				A266DAA61F979ED4006B2EDD /* AppDelegate.swift */,
@@ -296,6 +338,8 @@
 		A290B8761F9DB4F90015D339 /* Waypoint */ = {
 			isa = PBXGroup;
 			children = (
+				A249BF3A1FD7D9D6006EAE96 /* DefaultLayoutViewController.swift */,
+				A249BF491FD9405E006EAE96 /* WaypointPresentationViewController.swift */,
 				A290B87B1F9DB7940015D339 /* MOSProject-Bridging-Header.h */,
 				A290B8771F9DB66F0015D339 /* DJIAircraftAnnotation.swift */,
 				A290B8791F9DB77F0015D339 /* DJIAircraftAnnotationView.swift */,
@@ -349,10 +393,12 @@
 				A266DAA11F979ED4006B2EDD /* Resources */,
 				2FC6B1FCA09E935CDE2F4B8C /* [CP] Embed Pods Frameworks */,
 				04C9959DD2D98DEFAE4170D4 /* [CP] Copy Pods Resources */,
+				A2085B371FD7CDF400CE5CAB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A2085B361FD7CDF400CE5CAB /* PBXTargetDependency */,
 			);
 			name = MOSProject;
 			productName = MOSProject;
@@ -433,6 +479,12 @@
 			mainGroup = A266DA9A1F979ED4006B2EDD;
 			productRefGroup = A266DAA41F979ED4006B2EDD /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A2085B2E1FD7CDE700CE5CAB /* Products */;
+					ProjectRef = A2085B2D1FD7CDE700CE5CAB /* VideoPreviewer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A266DAA21F979ED4006B2EDD /* MOSProject */,
@@ -441,6 +493,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A2085B321FD7CDE700CE5CAB /* VideoPreviewer.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VideoPreviewer.framework;
+			remoteRef = A2085B311FD7CDE700CE5CAB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A266DAA11F979ED4006B2EDD /* Resources */ = {
@@ -507,11 +569,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-MOSProject/Pods-MOSProject-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${PODS_ROOT}/DJI-SDK-iOS/iOS_Mobile_SDK/DJISDK.framework",
+				"${PODS_ROOT}/DJI-UILibrary-iOS/iOS_UILibrary/DJIUILibrary.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DJISDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DJIUILibrary.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -550,6 +614,7 @@
 				A266DAE41F986ECD006B2EDD /* MOSProductCommunicationManager.swift in Sources */,
 				A290B87F1F9DBA0E0015D339 /* DJIMapController.swift in Sources */,
 				A266DAF31F9882DB006B2EDD /* AdvancedViewController.swift in Sources */,
+				A249BF4A1FD9405E006EAE96 /* WaypointPresentationViewController.swift in Sources */,
 				A266DAA71F979ED4006B2EDD /* AppDelegate.swift in Sources */,
 				A290B8861F9DC5A50015D339 /* DJIGSButtonController.swift in Sources */,
 				A2B8AE921FCEE915000129B1 /* SensorLineChartViewController.swift in Sources */,
@@ -564,7 +629,6 @@
 				A266DAF01F9882C9006B2EDD /* MOSLogConsoleViewController.swift in Sources */,
 				A237682D1FCE8B070096B707 /* SensorTableViewCell.swift in Sources */,
 				A2C69FF81FCE714A002F459C /* SensorTableViewController.swift in Sources */,
-				A2FA14F91FC581C0004A7738 /* Utility.swift in Sources */,
 				A22A2DF31FA6C15900007A9F /* CustomWaypointAnnotationView.swift in Sources */,
 				A266DADE1F97A56B006B2EDD /* MOSSection.swift in Sources */,
 				A2C69FFA1FCE71E3002F459C /* SensorDetailViewController.swift in Sources */,
@@ -572,6 +636,7 @@
 				A266DAD91F97A0AC006B2EDD /* MOSAction.swift in Sources */,
 				A290B8811F9DBBFD0015D339 /* DJIRootViewController.swift in Sources */,
 				A266DAE01F97AC71006B2EDD /* MOSModel.swift in Sources */,
+				A249BF3B1FD7D9D6006EAE96 /* DefaultLayoutViewController.swift in Sources */,
 				A266DAE81F987D2F006B2EDD /* MOSDynamicTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -595,6 +660,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A2085B361FD7CDF400CE5CAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VideoPreviewer;
+			targetProxy = A2085B351FD7CDF400CE5CAB /* PBXContainerItemProxy */;
+		};
 		A266DABC1F979ED4006B2EDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A266DAA21F979ED4006B2EDD /* MOSProject */;

@@ -11,7 +11,7 @@ import DJISDK
 
 
 let ENTER_DEBUG_MODE = false
-let DEBUG_ID = "192.168.1.102"
+let DEBUG_ID = "192.168.1.108"
 
 public class MOSProductCommunicationManager: NSObject, DJIFlightControllerDelegate {
     

@@ -33,7 +33,7 @@ class SensorLineChartViewController: UIViewController, ChartViewDelegate {
         self.lineChartView = LineChartView.init(frame: self.view.bounds)
         self.view.addSubview(self.lineChartView)
         
-        self.backBtn = UIButton(frame: CGRect(x: 24, y: 24, width: 64, height: 64))
+        self.backBtn = UIButton(frame: CGRect(x: 24, y: 12, width: 48, height: 48))
         self.backBtn.setTitle("back", for: UIControlState.normal)
         self.backBtn.addTarget(self, action: #selector(back), for: UIControlEvents.touchUpInside)
         self.backBtn.setTitleColor(UIColor.blue, for: .normal)
@@ -43,12 +43,16 @@ class SensorLineChartViewController: UIViewController, ChartViewDelegate {
         self.updateGraph()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     override func viewDidLayoutSubviews() {
         self.backBtn.removeFromSuperview()
         self.lineChartView.removeFromSuperview()
         self.lineChartView = LineChartView.init(frame: self.view.bounds)
         self.view.addSubview(self.lineChartView)
-        self.backBtn = UIButton(frame: CGRect(x: 24, y: 24, width: 64, height: 64))
+        self.backBtn = UIButton(frame: CGRect(x: 24, y: 12, width: 48, height: 48))
         self.backBtn.setTitle("back", for: UIControlState.normal)
         self.backBtn.addTarget(self, action: #selector(back), for: UIControlEvents.touchUpInside)
         self.backBtn.setTitleColor(UIColor.blue, for: .normal)
@@ -74,7 +78,6 @@ class SensorLineChartViewController: UIViewController, ChartViewDelegate {
         self.lineChartView.setScaleEnabled(true)
         self.lineChartView.dragDecelerationEnabled = true
         self.lineChartView.dragDecelerationFrictionCoef = 0.8
-        
     }
     
 

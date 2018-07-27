@@ -8,6 +8,8 @@
 
 import UIKit
 import DJISDK
+import DJIUILibrary
+import VideoPreviewer
 
 class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationManagerDelegate, DJIGSButtonControllerDelegate, DJIFlightControllerDelegate, DJIWaypointConfigViewControllerDelegate, UITextFieldDelegate, DJISDKManagerDelegate {
     
@@ -83,6 +85,11 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.initData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp(_:)), name: .UIKeyboardWillChangeFrame, object: nil)
+        
+        print("objectController: \(self.parent!)")
+        
+//        DJILogDebug("SDK Version: %@", DJISDKManager.sdkVersion())
+        DJIRemoteLogger.log(with: DJILogLevel.debug, file: nil, function: nil, line: 1, string: "SDK Version: \(DJISDKManager.sdkVersion())")
     }
     
     @objc func keyboardUp(_ notification: Notification) {
@@ -117,7 +124,17 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         AMapServices.shared().enableHTTPS = true
     }
     
+    func showTopView(objectController: UIViewController) {
+        if objectController.isKind(of: DefaultLayoutViewController.self) {
+            self.topView.isHidden = true
+        } else if objectController.isKind(of: MOSMainTabViewController.self) {
+            self.topView.isHidden = false
+        }
+    }
+    
     func initUI() {
+        
+        self.showTopView(objectController: self.parent!)
         
         self.modeLabel?.text = "N/A"
         self.gpsLabel?.text = "0"
@@ -132,7 +149,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         
         self.gsButtonVC = DJIGSButtonController(nibName: "DJIGSButtonController", bundle: Bundle.main)
         if self.gsButtonVC != nil {
-            self.gsButtonVC?.view.frame = CGRect(x: 10, y: (self.topView.frame.origin.y + self.topView.frame.size.height + 48), width: self.gsButtonVC!.view.frame.size.width, height: self.gsButtonVC!.view.frame.size.height)
+            self.gsButtonVC?.view.frame = CGRect(x: 60, y: (self.topView.frame.origin.y + self.topView.frame.size.height + 48), width: self.gsButtonVC!.view.frame.size.width, height: self.gsButtonVC!.view.frame.size.height)
         } else {
             print("gsButtonVC is nil")
         }
@@ -159,7 +176,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         
         self.mapView.isUserInteractionEnabled = true
         
-        self.createWaypointButton = UIButton(frame: CGRect(x: 10, y: ((self.gsButtonVC?.view.frame.size.height)! + self.topView.frame.origin.y + self.topView.frame.size.height + 48), width: 64, height: 24))
+        self.createWaypointButton = UIButton(frame: CGRect(x: 60, y: ((self.gsButtonVC?.view.frame.size.height)! + self.topView.frame.origin.y + self.topView.frame.size.height + 48), width: 48, height: 20))
         self.createWaypointButton.backgroundColor = UIColor.gray
         self.createWaypointButton.setTitleShadowColor(UIColor.black, for: UIControlState.highlighted)
         self.createWaypointButton.reversesTitleShadowWhenHighlighted = true
@@ -170,7 +187,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.createWaypointButton.isHidden = true
         self.mapView.addSubview(self.createWaypointButton)
         
-        self.deleteWaypointButton = UIButton(frame: CGRect(x: 10, y: ((self.gsButtonVC?.view.frame.size.height)! + self.topView.frame.origin.y + self.topView.frame.size.height + 74), width: 64, height: 24))
+        self.deleteWaypointButton = UIButton(frame: CGRect(x: 60, y: ((self.gsButtonVC?.view.frame.size.height)! + self.topView.frame.origin.y + self.topView.frame.size.height + 74), width: 48, height: 20))
         self.deleteWaypointButton.backgroundColor = UIColor.gray
         self.deleteWaypointButton.setTitleShadowColor(UIColor.black, for: UIControlState.highlighted)
         self.deleteWaypointButton.reversesTitleShadowWhenHighlighted = true
@@ -210,6 +227,9 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
     }
     
     func updateUI() {
+        
+        self.showTopView(objectController: self.parent!)
+
         self.latitudeLabel.removeFromSuperview()
         self.longitudeLabel.removeFromSuperview()
         self.latitudeTxt.removeFromSuperview()
@@ -266,6 +286,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             print("DJI SDK register succeed!")
             if ENTER_DEBUG_MODE {
                 DJISDKManager.enableBridgeMode(withBridgeAppIP: DEBUG_ID)
+                DJISDKManager.enableRemoteLogging(withDeviceID: "deviceID", logServerURLString: "serverURL")
             }
 //                        self.productConnected(DJISDKManager.product())
             self.appDelegate?.model?.addLog(newLogEntry: "waypoint registration succeed")
@@ -574,7 +595,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
             let location: CLLocation? = waypoints?[i]
             if CLLocationCoordinate2DIsValid((location?.coordinate)!) {
                 let waypoint: DJIWaypoint = DJIWaypoint(coordinate: (location?.coordinate)!)
-                waypoint.cornerRadiusInMeters = 20.0
+                waypoint.cornerRadiusInMeters = 5.0
                 
                 self.waypointMission?.add(waypoint)
             }
@@ -647,6 +668,16 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
                 let alertController = UIAlertController(title: "Mission finished!", message: "Mission execution finished", preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self!.present(alertController, animated: true, completion: nil)
+            }
+        })
+        
+        self.missionOperator()?.addListener(toUploadEvent: self, with: DispatchQueue.main, andBlock: { (uploadEvent: DJIWaypointMissionUploadEvent) in
+            if uploadEvent.error != nil {
+                print("uploadEvent: \(uploadEvent.error!)")
+                self.appDelegate?.model?.addLog(newLogEntry: "\(uploadEvent.error ?? "no error" as! Error)")
+            } else {
+                print("uploadEvent: \(String(describing: (uploadEvent.progress)))")
+                self.appDelegate?.model?.addLog(newLogEntry: "\(String(describing: (uploadEvent.progress)))")
             }
         })
     }
@@ -1087,7 +1118,7 @@ class DJIRootViewController: UIViewController, MAMapViewDelegate, CLLocationMana
         self.vsLabel.text = String(format: "%.1f M/S", -(state.velocityZ))
         self.hsLabel.text = NSString.localizedStringWithFormat("%0.1f M/S", sqrtf(state.velocityX * state.velocityX + state.velocityY * state.velocityY)) as String
         self.altitudeLabel.text = String(format: "%.1f M", state.altitude)
-        
+                
         if self.missionOperator()?.currentState == DJIWaypointMissionState.executing {
             if state.aircraftLocation != nil {
                 //            buffer[passedCoordinatesCount] = state.aircraftLocation!.coordinate

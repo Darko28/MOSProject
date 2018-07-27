@@ -19,6 +19,9 @@ class MOSMainTabViewController: UITabBarController {
 
         // Do any additional setup after loading the view.
         
+        let backBarBtn: UIBarButtonItem = UIBarButtonItem.init(title: "back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backToDefaultLayoutVC))
+        self.navigationItem.leftBarButtonItem = backBarBtn
+
         self.appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         let viewControllers = NSMutableArray()
@@ -67,11 +70,21 @@ class MOSMainTabViewController: UITabBarController {
         sensorTableVC.title = "Sensors"
         viewControllers.add(sensorTableVC)
         
+//        let defaultVC: DefaultLayoutViewController = DefaultLayoutViewController(nibName: "DefaultLayoutViewController", bundle: Bundle.main)
+//        defaultVC.title = "Default"
+//        viewControllers.add(defaultVC)
+        
+        
         self.appDelegate?.model?.addLog(newLogEntry: "Created UI")
         self.setViewControllers(viewControllers as? [UIViewController], animated: true)
-        self.selectedViewController = viewControllers[1] as? UIViewController
+        self.selectedViewController = viewControllers[2] as? UIViewController
         
-    }    
+//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backToDefaultLayoutVC))
+    }
+    
+    @objc func backToDefaultLayoutVC() {
+        self.dismiss(animated: true, completion: nil)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
